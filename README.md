@@ -103,7 +103,7 @@ Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev
 -->
 
 ### **WORK IN PROGRESS**
-* (spabas) initial release
+Initial release  
 
 ## License
 MIT License
