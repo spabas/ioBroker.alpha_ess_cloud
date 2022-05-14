@@ -1,0 +1,80 @@
+{
+	"common": {
+		"name": "alpha_ess_cloud",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Alpha ESS Cloud",
+		"titleLang": {
+			"en": "Alpha ESS Cloud",
+			"de": "Alpha ESS-Cloud",
+			"ru": "Облако Alpha ESS",
+			"pt": "Nuvem Alfa ESS",
+			"nl": "Alpha ESS Cloud",
+			"fr": "Nuage Alpha ESS",
+			"it": "Alpha ESS Cloud",
+			"es": "Nube Alpha ESS",
+			"pl": "Chmura Alpha ESS",
+			"zh-cn": "Alpha ESS 云"
+		},
+		"desc": {
+			"en": "Getting PV data from Alpha ESS Cloud",
+			"de": "Abrufen von PV-Daten aus Alpha ESS Cloud",
+			"ru": "Получение данных PV из Alpha ESS Cloud",
+			"pt": "Obtendo dados PV do Alpha ESS Cloud",
+			"nl": "PV-gegevens ophalen van Alpha ESS Cloud",
+			"fr": "Obtenir des données PV à partir d'Alpha ESS Cloud",
+			"it": "Ottenere dati fotovoltaici da Alpha ESS Cloud",
+			"es": "Obtención de datos fotovoltaicos de Alpha ESS Cloud",
+			"pl": "Pobieranie danych PV z Alpha ESS Cloud",
+			"zh-cn": "从 Alpha ESS Cloud 获取 PV 数据"
+		},
+		"authors": [
+			"spabas <bastian.spaeth@gmx.de>"
+		],
+		"keywords": [
+			"ioBroker",
+			"template",
+			"Smart Home",
+			"home automation"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "alpha_ess_cloud.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/spabas/ioBroker.alpha_ess_cloud/main/admin/alpha_ess_cloud.png",
+		"readme": "https://github.com/spabas/ioBroker.alpha_ess_cloud/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "energy",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"materialize": true,
+		"dependencies": [
+			{
+				"js-controller": ">=2.0.0"
+			}
+		]
+	},
+	"native": {
+		"system": "",
+		"username": "",
+		"password": ""
+	},
+	"objects": [],
+	"instanceObjects": []
+}
