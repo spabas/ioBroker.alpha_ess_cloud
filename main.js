@@ -242,15 +242,17 @@ class AlphaEssCloud extends utils.Adapter {
 		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
-				instance.authToken = json.data.AccessToken;
-				instance.log.debug("Successfully fetched access token: " + instance.authToken);
-				if (callback)
-					callback();
+				if (json) {
+					instance.authToken = json.data.AccessToken;
+					instance.log.debug("Successfully fetched access token: " + instance.authToken);
+					if (callback)
+						callback();
+
+					return;
+				}
 			}
-			else
-			{
-				instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
-			}
+
+			instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
 		});
 	}
 }
