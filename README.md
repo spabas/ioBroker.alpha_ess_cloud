@@ -21,6 +21,9 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* Handling login failure
+
 ### 0.0.6 (2022-05-15)
 * Fix potential null reference
 

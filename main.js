@@ -242,13 +242,17 @@ class AlphaEssCloud extends utils.Adapter {
 		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
-				if (json) {
+				if (json && json.data) {
 					instance.authToken = json.data.AccessToken;
-					instance.log.debug("Successfully fetched access token: " + instance.authToken);
+					instance.log.info("Successfully loged in");
+					instance.log.debug("Fetched access token: " + instance.authToken);
 					if (callback)
 						callback();
 
 					return;
+				}
+				else {
+					instance.log.error("Login unsuccessfull - wrong credantials?");
 				}
 			}
 
