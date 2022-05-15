@@ -40,7 +40,8 @@ class AlphaEssCloud extends utils.Adapter {
 			"preal_l1", "preal_l2", "preal_l3", "preal_sum",
 			"pmeter_l1", "pmeter_l2", "pmeter_l3", "pmeter_sum",
 			"pmeter_dc", "soc", "pbat",
-			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum"
+			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum",
+			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday"
 		];
 
 		for (let i = 0; i < stateNames.length; i++) {
@@ -69,10 +70,27 @@ class AlphaEssCloud extends utils.Adapter {
 			native: {},
 		});
 
+		await this.setObjectNotExistsAsync("statistics_last_updated", {
+			type: "state",
+			common: {
+				name: "statistics_last_updated",
+				type: "number",
+				role: "value.time",
+				read: true,
+				write: false,
+			},
+			native: {},
+		});
+
 		const instance = this;
+
 		this.setInterval(() => {
-			instance.getData();
+			instance.getPowerData();
 		}, 60000);
+
+		this.setInterval(() => {
+			instance.getStatisticsData();
+		}, 300000);
 	}
 
 	/**
@@ -108,7 +126,7 @@ class AlphaEssCloud extends utils.Adapter {
 		}
 	}
 
-	getData() {
+	getPowerData() {
 		const url = "https://www.alphaess.com/api/ESS/GetLastPowerDataBySN";
 		const headers = {
 			"Content-Type":"application/json",
@@ -153,6 +171,44 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("ev_power_sum", parseFloat(json.data.ev1_power) + parseFloat(json.data.ev2_power) + parseFloat(json.data.ev3_power) + parseFloat(json.data.ev4_power), true);
 
 				instance.setState("last_updated", new Date().getTime(), true);
+			}
+			else if (response.statusCode == 401) {
+				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
+				instance.Login();
+			}
+			else
+			{
+				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
+			}
+		});
+	}
+
+	getStatisticsData() {
+		const url = "https://www.alphaess.com/api/ESS/SticsSummeryDataForCustomer";
+		const headers = {
+			"Content-Type":"application/json",
+			"Authorization":"Bearer " + this.authToken
+		};
+
+		const body = {
+			sys_sn: this.config.system,
+			noLoading: true,
+			showLoading: false,
+			tday: new Date().toLocaleDateString("en-CA")
+		};
+
+		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
+
+		const instance = this;
+		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				const json = JSON.parse(body);
+				instance.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
+				instance.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
+				instance.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
+				instance.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
+
+				instance.setState("statistics_last_updated", new Date().getTime(), true);
 			}
 			else if (response.statusCode == 401) {
 				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);

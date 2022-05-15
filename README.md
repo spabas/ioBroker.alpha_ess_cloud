@@ -21,6 +21,9 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+Getting statistics data
+
 ### 0.0.3 (2022-05-15)
 Changed ReadMe
 
