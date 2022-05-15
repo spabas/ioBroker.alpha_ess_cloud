@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.6",
+        "version": "0.0.7",
         "news": {
+            "0.0.7": {
+                "en": "Handling login failure",
+                "de": "Behandlung von Anmeldefehlern",
+                "ru": "Обработка ошибки входа",
+                "pt": "Lidando com falha de login",
+                "nl": "Inlogfout verwerken",
+                "fr": "Gestion des échecs de connexion",
+                "it": "Gestione dell'errore di accesso",
+                "es": "Manejo de errores de inicio de sesión",
+                "pl": "Obsługa błędu logowania",
+                "zh-cn": "处理登录失败"
+            },
             "0.0.6": {
                 "en": "Fix potential null reference",
                 "de": "Mögliche Nullreferenz beheben",
