@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.5",
+        "version": "0.0.6",
         "news": {
+            "0.0.6": {
+                "en": "Fix potential null reference",
+                "de": "Mögliche Nullreferenz beheben",
+                "ru": "Исправить потенциальную нулевую ссылку",
+                "pt": "Corrigir possível referência nula",
+                "nl": "Mogelijke nulreferentie repareren",
+                "fr": "Correction d'une référence nulle potentielle",
+                "it": "Correggere il potenziale riferimento nullo",
+                "es": "Arreglar posible referencia nula",
+                "pl": "Napraw potencjalne zerowe odniesienie",
+                "zh-cn": "修复潜在的空引用"
+            },
             "0.0.5": {
                 "en": "Daten direkt nach Adapter-Start abrufen \nIntervalle bei Adapter-Ende löschen",
                 "de": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
