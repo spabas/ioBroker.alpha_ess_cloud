@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.4",
+        "version": "0.0.5",
         "news": {
+            "0.0.5": {
+                "en": "Daten direkt nach Adapter-Start abrufen \nIntervalle bei Adapter-Ende löschen",
+                "de": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
+                "ru": "Daten direct nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
+                "pt": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
+                "nl": "Daten direct nach Adapter-Start abrufen\nIntervalle bij Adapter-Ende los",
+                "fr": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
+                "it": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
+                "es": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
+                "pl": "Daten direkt nach Adapter-Start Abrufen\nIntervalle bei Adapter-Ende loschen",
+                "zh-cn": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen"
+            },
             "0.0.4": {
                 "en": "Getting statistics data",
                 "de": "Abrufen von Statistikdaten",
