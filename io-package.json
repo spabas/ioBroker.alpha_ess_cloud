@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "news": {
+            "0.0.4": {
+                "en": "Getting statistics data",
+                "de": "Abrufen von Statistikdaten",
+                "ru": "Получение данных статистики",
+                "pt": "Obtendo dados estatísticos",
+                "nl": "Statistiekgegevens ophalen",
+                "fr": "Obtenir des données statistiques",
+                "it": "Ottenere dati statistici",
+                "es": "Obtener datos estadísticos",
+                "pl": "Pobieranie danych statystycznych",
+                "zh-cn": "获取统计数据"
+            },
             "0.0.3": {
                 "en": "Changed ReadMe",
                 "de": "LiesMich geändert",
