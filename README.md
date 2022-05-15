@@ -21,6 +21,10 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* Daten direkt nach Adapter-Start abrufen 
+* Intervalle bei Adapter-Ende löschen
+
 ### 0.0.4 (2022-05-15)
 Getting statistics data
 

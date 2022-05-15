@@ -83,12 +83,16 @@ class AlphaEssCloud extends utils.Adapter {
 		});
 
 		const instance = this;
+		this.Login(function() {
+			instance.getPowerData();
+			instance.getStatisticsData();
+		});
 
-		this.setInterval(() => {
+		this.timer_data = this.setInterval(() => {
 			instance.getPowerData();
 		}, 60000);
 
-		this.setInterval(() => {
+		this.timer_statistics = this.setInterval(() => {
 			instance.getStatisticsData();
 		}, 300000);
 	}
@@ -99,11 +103,10 @@ class AlphaEssCloud extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			// Here you must clear all timeouts or intervals that may still be active
-			// clearTimeout(timeout1);
-			// clearTimeout(timeout2);
-			// ...
-			// clearInterval(interval1);
+			if (this.timer_data)
+				this.clearInterval(this.timer_data);
+			if (this.timer_statistics)
+				this.clearInterval(this.timer_statistics);
 
 			callback();
 		} catch (e) {
@@ -221,7 +224,10 @@ class AlphaEssCloud extends utils.Adapter {
 		});
 	}
 
-	Login() {
+	/**
+	 * @param {() => void} callback
+	 */
+	Login(callback = () => {}) {
 		const instance = this;
 		const url = "https://www.alphaess.com/api/Account/Login";
 		const headers = {
@@ -238,6 +244,8 @@ class AlphaEssCloud extends utils.Adapter {
 				const json = JSON.parse(body);
 				instance.authToken = json.data.AccessToken;
 				instance.log.debug("Successfully fetched access token: " + instance.authToken);
+				if (callback)
+					callback();
 			}
 			else
 			{
