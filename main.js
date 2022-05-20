@@ -41,7 +41,8 @@ class AlphaEssCloud extends utils.Adapter {
 			"pmeter_l1", "pmeter_l2", "pmeter_l3", "pmeter_sum",
 			"pmeter_dc", "soc", "pbat",
 			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum",
-			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday"
+			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
+			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday"
 		];
 
 		for (let i = 0; i < stateNames.length; i++) {
@@ -85,7 +86,8 @@ class AlphaEssCloud extends utils.Adapter {
 		const instance = this;
 		this.Login(function() {
 			instance.getPowerData();
-			instance.getStatisticsData();
+			instance.getSummaryStatisticsData();
+			instance.getPeriodStatisticsData();
 		});
 
 		this.timer_data = this.setInterval(() => {
@@ -93,7 +95,8 @@ class AlphaEssCloud extends utils.Adapter {
 		}, 60000);
 
 		this.timer_statistics = this.setInterval(() => {
-			instance.getStatisticsData();
+			instance.getSummaryStatisticsData();
+			instance.getPeriodStatisticsData();
 		}, 300000);
 	}
 
@@ -186,7 +189,7 @@ class AlphaEssCloud extends utils.Adapter {
 		});
 	}
 
-	getStatisticsData() {
+	getSummaryStatisticsData() {
 		const url = "https://www.alphaess.com/api/ESS/SticsSummeryDataForCustomer";
 		const headers = {
 			"Content-Type":"application/json",
@@ -210,6 +213,51 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
 				instance.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
 				instance.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
+
+				instance.setState("statistics_last_updated", new Date().getTime(), true);
+			}
+			else if (response.statusCode == 401) {
+				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
+				instance.Login();
+			}
+			else
+			{
+				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
+			}
+		});
+	}
+
+	getPeriodStatisticsData() {
+		const url = "https://www.alphaess.com/api/Power/SticsByPeriod";
+		const headers = {
+			"Content-Type":"application/json",
+			"Authorization":"Bearer " + this.authToken
+		};
+
+		const body = {
+			SN: this.config.system,
+			noLoading: true,
+			beginDay: new Date().toLocaleDateString("en-CA"),
+			endDay: new Date().toLocaleDateString("en-CA"),
+			tDay: new Date().toLocaleDateString("en-CA"),
+			isOEM: 0,
+			userId: ""
+		};
+
+		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
+
+		const instance = this;
+		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				const json = JSON.parse(body);
+				instance.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
+				instance.setState("EselfSufficiencyToday", parseFloat(json.data.EselfSufficiency), true);
+				instance.setState("EGrid2LoadToday", parseFloat(json.data.EGrid2Load), true);
+				instance.setState("EGridChargeToday", parseFloat(json.data.EGridCharge), true);
+				instance.setState("EHomeLoadToday", parseFloat(json.data.EHomeLoad), true);
+				instance.setState("EbatToday", parseFloat(json.data.Ebat), true);
+				instance.setState("EchargeToday", parseFloat(json.data.Echarge), true);
+				instance.setState("EeffToday", parseFloat(json.data.Eeff), true);
 
 				instance.setState("statistics_last_updated", new Date().getTime(), true);
 			}
