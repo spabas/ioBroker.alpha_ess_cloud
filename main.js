@@ -40,7 +40,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"preal_l1", "preal_l2", "preal_l3", "preal_sum",
 			"pmeter_l1", "pmeter_l2", "pmeter_l3", "pmeter_sum",
 			"pmeter_dc", "soc", "pbat",
-			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum",
+			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum", "home_load",
 			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
 			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday"
 		];
@@ -175,6 +175,8 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("ev3_power", parseFloat(json.data.ev3_power), true);
 				instance.setState("ev4_power", parseFloat(json.data.ev4_power), true);
 				instance.setState("ev_power_sum", parseFloat(json.data.ev1_power) + parseFloat(json.data.ev2_power) + parseFloat(json.data.ev3_power) + parseFloat(json.data.ev4_power), true);
+
+				instance.setState("home_load", parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3) + parseFloat(json.data.pbat), true);
 
 				instance.setState("last_updated", new Date().getTime(), true);
 			}
