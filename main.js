@@ -213,10 +213,6 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
 				instance.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
 				instance.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
-				instance.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
-				instance.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
-				instance.setState("EpvTToday", parseFloat(json.data.EpvT), true);
-				instance.setState("EoutToday", parseFloat(json.data.Eout), true);
 
 				instance.setState("statistics_last_updated", new Date().getTime(), true);
 			}
@@ -262,6 +258,10 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("EbatToday", parseFloat(json.data.Ebat), true);
 				instance.setState("EchargeToday", parseFloat(json.data.Echarge), true);
 				instance.setState("EeffToday", parseFloat(json.data.Eeff), true);
+				instance.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
+				instance.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
+				instance.setState("EpvTToday", parseFloat(json.data.EpvT), true);
+				instance.setState("EoutToday", parseFloat(json.data.Eout), true);
 
 				instance.setState("statistics_last_updated", new Date().getTime(), true);
 			}
