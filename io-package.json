@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.8",
+        "version": "0.0.9",
         "news": {
+            "0.0.9": {
+                "en": "New statistic values",
+                "de": "Neue Statistikwerte",
+                "ru": "Новые статистические значения",
+                "pt": "Novos valores estatísticos",
+                "nl": "Nieuwe statistische waarden",
+                "fr": "Nouvelles valeurs statistiques",
+                "it": "Nuovi valori statistici",
+                "es": "Nuevos valores estadísticos",
+                "pl": "Nowe wartości statystyczne",
+                "zh-cn": "新的统计值"
+            },
             "0.0.8": {
                 "en": "New statistic values",
                 "de": "Neue Statistikwerte",
