@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.11 (2022-05-26)
 * Calculation of current load
 
 ### 0.0.10 (2022-05-26)

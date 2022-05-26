@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.10",
+        "version": "0.0.11",
         "news": {
+            "0.0.11": {
+                "en": "Calculation of current load",
+                "de": "Berechnung der Strombelastung",
+                "ru": "Расчет текущей нагрузки",
+                "pt": "Cálculo da carga atual",
+                "nl": "Berekening van de huidige belasting:",
+                "fr": "Calcul de la charge actuelle",
+                "it": "Calcolo del carico di corrente",
+                "es": "Cálculo de la carga actual",
+                "pl": "Obliczanie aktualnego obciążenia",
+                "zh-cn": "当前负载的计算"
+            },
             "0.0.10": {
                 "en": "New statistic values (fix for 0.0.9)",
                 "de": "Neue Statistikwerte (Fix für 0.0.9)",
