@@ -42,7 +42,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"pmeter_dc", "soc", "pbat",
 			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum",
 			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
-			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday"
+			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday"
 		];
 
 		for (let i = 0; i < stateNames.length; i++) {
@@ -213,6 +213,10 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
 				instance.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
 				instance.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
+				instance.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
+				instance.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
+				instance.setState("EpvTToday", parseFloat(json.data.EpvT), true);
+				instance.setState("EoutToday", parseFloat(json.data.Eout), true);
 
 				instance.setState("statistics_last_updated", new Date().getTime(), true);
 			}
