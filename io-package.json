@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.9",
+        "version": "0.0.10",
         "news": {
+            "0.0.10": {
+                "en": "New statistic values (fix for 0.0.9)",
+                "de": "Neue Statistikwerte (Fix für 0.0.9)",
+                "ru": "Новые статистические значения (исправлено для 0.0.9)",
+                "pt": "Novos valores estatísticos (correção para 0.0.9)",
+                "nl": "Nieuwe statistische waarden (fix voor 0.0.9)",
+                "fr": "Nouvelles valeurs statistiques (correction pour 0.0.9)",
+                "it": "Nuovi valori statistici (correzione per 0.0.9)",
+                "es": "Nuevos valores estadísticos (corrección para 0.0.9)",
+                "pl": "Nowe wartości statystyk (poprawka dla 0.0.9)",
+                "zh-cn": "新的统计值（修复 0.0.9）"
+            },
             "0.0.9": {
                 "en": "New statistic values",
                 "de": "Neue Statistikwerte",
