@@ -21,6 +21,9 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* Update intervals can now be configured
+
 ### 0.0.11 (2022-05-26)
 * Calculation of current load
 

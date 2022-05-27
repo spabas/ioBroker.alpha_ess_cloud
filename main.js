@@ -33,7 +33,19 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.info("config system: " + this.config.system);
 		this.log.info("config username: " + this.config.username);
 		this.log.info("config password: " + this.config.password.substring(0, 3) + "*******");
+		this.log.info("config update_interval_live: " + this.config.update_interval_live);
+		this.log.info("config update_interval_statistics: " + this.config.update_interval_statistics);
 		this.authToken = "";
+		this.timer_data = null;
+		this.timer_statistics = null;
+
+		let update_interval_live = 60000;
+		if (this.config.update_interval_live > 0)
+			update_interval_live = this.config.update_interval_live;
+
+		let update_interval_statistics = 300000;
+		if (this.config.update_interval_statistics > 0)
+			update_interval_statistics = this.config.update_interval_statistics;
 
 		const stateNames = [
 			"ppv1", "ppv2", "ppv3", "ppv4", "ppv_sum",
@@ -88,16 +100,15 @@ class AlphaEssCloud extends utils.Adapter {
 			instance.getPowerData();
 			instance.getSummaryStatisticsData();
 			instance.getPeriodStatisticsData();
+			instance.timer_data = instance.setInterval(() => {
+				instance.getPowerData();
+			}, update_interval_live);
+
+			instance.timer_statistics = instance.setInterval(() => {
+				instance.getSummaryStatisticsData();
+				instance.getPeriodStatisticsData();
+			}, update_interval_statistics);
 		});
-
-		this.timer_data = this.setInterval(() => {
-			instance.getPowerData();
-		}, 60000);
-
-		this.timer_statistics = this.setInterval(() => {
-			instance.getSummaryStatisticsData();
-			instance.getPeriodStatisticsData();
-		}, 300000);
 	}
 
 	/**
