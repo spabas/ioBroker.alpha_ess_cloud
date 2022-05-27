@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.12 (2022-05-27)
 * Update intervals can now be configured
 
 ### 0.0.11 (2022-05-26)

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.11",
+        "version": "0.0.12",
         "news": {
+            "0.0.12": {
+                "en": "Update intervals can now be configured",
+                "de": "Aktualisierungsintervalle können jetzt konfiguriert werden",
+                "ru": "Интервалы обновления теперь можно настроить",
+                "pt": "Os intervalos de atualização agora podem ser configurados",
+                "nl": "Update-intervallen kunnen nu worden geconfigureerd",
+                "fr": "Les intervalles de mise à jour peuvent maintenant être configurés",
+                "it": "È ora possibile configurare gli intervalli di aggiornamento",
+                "es": "Los intervalos de actualización ahora se pueden configurar",
+                "pl": "Można teraz skonfigurować interwały aktualizacji",
+                "zh-cn": "现在可以配置更新间隔"
+            },
             "0.0.11": {
                 "en": "Calculation of current load",
                 "de": "Berechnung der Strombelastung",
