@@ -54,7 +54,8 @@ class AlphaEssCloud extends utils.Adapter {
 			"pmeter_dc", "soc", "pbat",
 			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum", "home_load",
 			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
-			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday"
+			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday",
+			"EselfConsumptionAllTime", "EselfSufficiencyAllTime", "EGrid2LoadAllTime", "EGridChargeAllTime", "EHomeLoadAllTime", "EbatAllTime", "EchargeAllTime", "EeffAllTime", "Epv2loadAllTime", "EpvchargeAllTime", "EpvTAllTime", "EoutAllTime"
 		];
 
 		for (let i = 0; i < stateNames.length; i++) {
@@ -107,6 +108,7 @@ class AlphaEssCloud extends utils.Adapter {
 			instance.timer_statistics = instance.setInterval(() => {
 				instance.getSummaryStatisticsData();
 				instance.getPeriodStatisticsData();
+				instance.getAllTimeStatisticsData();
 			}, update_interval_statistics);
 		});
 	}
@@ -277,6 +279,55 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("EoutToday", parseFloat(json.data.Eout), true);
 
 				instance.setState("statistics_last_updated", new Date().getTime(), true);
+			}
+			else if (response.statusCode == 401) {
+				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
+				instance.Login();
+			}
+			else
+			{
+				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
+			}
+		});
+	}
+
+	getAllTimeStatisticsData() {
+		const url = "https://cloud.alphaess.com/api/Power/SticsByPeriod";
+		const headers = {
+			"Content-Type":"application/json",
+			"Authorization":"Bearer " + this.authToken
+		};
+
+		const body = {
+			SN: this.config.system,
+			noLoading: true,
+			beginDay: new Date(2022, 4, 30).toLocaleDateString("en-CA"), //30.05.2022
+			endDay: new Date().toLocaleDateString("en-CA"),
+			tDay: new Date().toLocaleDateString("en-CA"),
+			isOEM: 0,
+			userId: ""
+		};
+
+		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
+
+		const instance = this;
+		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				const json = JSON.parse(body);
+				instance.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
+				instance.setState("EselfSufficiencyAllTime", parseFloat(json.data.EselfSufficiency), true);
+				instance.setState("EGrid2LoadAllTime", parseFloat(json.data.EGrid2Load), true);
+				instance.setState("EGridChargeAllTime", parseFloat(json.data.EGridCharge), true);
+				instance.setState("EHomeLoadAllTime", parseFloat(json.data.EHomeLoad), true);
+				instance.setState("EbatAllTime", parseFloat(json.data.Ebat), true);
+				instance.setState("EchargeAllTime", parseFloat(json.data.Echarge), true);
+				instance.setState("EeffAllTime", parseFloat(json.data.Eeff), true);
+				instance.setState("Epv2loadAllTime", parseFloat(json.data.Epv2load), true);
+				instance.setState("EpvchargeAllTime", parseFloat(json.data.Epvcharge), true);
+				instance.setState("EpvTAllTime", parseFloat(json.data.EpvT), true);
+				instance.setState("EoutAllTime", parseFloat(json.data.Eout), true);
+
+				instance.setState("statistics_alltime_last_updated", new Date().getTime(), true);
 			}
 			else if (response.statusCode == 401) {
 				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);

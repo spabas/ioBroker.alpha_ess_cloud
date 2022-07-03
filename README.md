@@ -20,6 +20,10 @@ Getting PV data from Alpha ESS Cloud
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* AllTime Statistics
+
 ### 0.0.13 (2022-07-03)
 * Changed URL of Alpha Cloud to https://cloud.alphaess.com
 
