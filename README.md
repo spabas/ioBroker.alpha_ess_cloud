@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.14 (2022-07-03)
 * AllTime Statistics
 
 ### 0.0.13 (2022-07-03)
