@@ -20,6 +20,8 @@ Getting PV data from Alpha ESS Cloud
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* Changed URL of Alpha Cloud to https://cloud.alphaess.com
 
 ### 0.0.12 (2022-05-27)
 * Update intervals can now be configured

@@ -144,7 +144,7 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	getPowerData() {
-		const url = "https://www.alphaess.com/api/ESS/GetLastPowerDataBySN";
+		const url = "https://cloud.alphaess.com/api/ESS/GetLastPowerDataBySN";
 		const headers = {
 			"Content-Type":"application/json",
 			"Authorization":"Bearer " + this.authToken
@@ -203,7 +203,7 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	getSummaryStatisticsData() {
-		const url = "https://www.alphaess.com/api/ESS/SticsSummeryDataForCustomer";
+		const url = "https://cloud.alphaess.com/api/ESS/SticsSummeryDataForCustomer";
 		const headers = {
 			"Content-Type":"application/json",
 			"Authorization":"Bearer " + this.authToken
@@ -241,7 +241,7 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	getPeriodStatisticsData() {
-		const url = "https://www.alphaess.com/api/Power/SticsByPeriod";
+		const url = "https://cloud.alphaess.com/api/Power/SticsByPeriod";
 		const headers = {
 			"Content-Type":"application/json",
 			"Authorization":"Bearer " + this.authToken
@@ -294,7 +294,7 @@ class AlphaEssCloud extends utils.Adapter {
 	 */
 	Login(callback = () => {}) {
 		const instance = this;
-		const url = "https://www.alphaess.com/api/Account/Login";
+		const url = "https://cloud.alphaess.com/api/Account/Login";
 		const headers = {
 			"Content-Type":"application/json"
 		};
