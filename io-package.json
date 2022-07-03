@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.12",
+        "version": "0.0.13",
         "news": {
+            "0.0.13": {
+                "en": "Changed URL of Alpha Cloud to https://cloud.alphaess.com",
+                "de": "Änderung der URL von Alpha Cloud auf https://cloud.alphaess.com",
+                "ru": "Измененный URL Alpha Cloud на https://cloud.alphaess.com",
+                "pt": "URL alterada da Alpha Cloud para https://cloud.alphaess.com",
+                "nl": "Veranderde URL van Alpha Cloud tot htps:",
+                "fr": "URL modifiée de Alpha Cloud à https://cloud.alphaess.com",
+                "it": "URL modificato di Alpha Cloud a https://cloud.alphaess.com",
+                "es": "Cambio de URL de Alpha Cloud en https://cloud.alphaess.com",
+                "pl": "Changed URL of Alpha Cloud to https:/cloudess.com (ang.)",
+                "zh-cn": "改变Alpha Cloud URL to http://cloud.alphaess.com"
+            },
             "0.0.12": {
                 "en": "Update intervals can now be configured",
                 "de": "Aktualisierungsintervalle können jetzt konfiguriert werden",
