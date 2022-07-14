@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.14",
+        "version": "0.0.15",
         "news": {
+            "0.0.15": {
+                "en": "Using external intervert information in ppv sum and consumption",
+                "de": "Verwendung externer Intervert-Informationen in ppv Summe und Verbrauch",
+                "ru": "Использование внешней информации в ppv и потреблении",
+                "pt": "Usando informações intervert externas na soma ppv e consumo",
+                "nl": "Gebruikt externe informatie in ppv sum en consumptie",
+                "fr": "Utilisation d'informations intervert externes dans ppv sum et consommation",
+                "it": "Utilizzo di informazioni intervertenze esterne in somma e consumo ppv",
+                "es": "Utilizando información externa intervert en la suma y consumo de ppv",
+                "pl": "Wykorzystując zewnętrzne informacje zawarte w sv sum i konsumpcji",
+                "zh-cn": "在ppvum和消费中使用外部避免信息"
+            },
             "0.0.14": {
                 "en": "AllTime Statistics",
                 "de": "AllTime Statistik",

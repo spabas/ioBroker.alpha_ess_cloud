@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.15 (2022-07-14)
 * Using external intervert information in ppv sum and consumption
 
 ### 0.0.14 (2022-07-03)
