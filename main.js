@@ -48,7 +48,7 @@ class AlphaEssCloud extends utils.Adapter {
 			update_interval_statistics = this.config.update_interval_statistics;
 
 		const stateNames = [
-			"ppv1", "ppv2", "ppv3", "ppv4", "ppv_sum",
+			"ppv1", "ppv2", "ppv3", "ppv4", "ppv_sum", "ppv_and_dc_sum",
 			"preal_l1", "preal_l2", "preal_l3", "preal_sum",
 			"pmeter_l1", "pmeter_l2", "pmeter_l3", "pmeter_sum",
 			"pmeter_dc", "soc", "pbat",
