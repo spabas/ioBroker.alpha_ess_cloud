@@ -96,6 +96,18 @@ class AlphaEssCloud extends utils.Adapter {
 			native: {},
 		});
 
+		await this.setObjectNotExistsAsync("statistics_alltime_last_updated", {
+			type: "state",
+			common: {
+				name: "statistics_alltime_last_updated",
+				type: "number",
+				role: "value.time",
+				read: true,
+				write: false,
+			},
+			native: {},
+		});
+
 		const instance = this;
 		this.Login(function() {
 			instance.getPowerData();
