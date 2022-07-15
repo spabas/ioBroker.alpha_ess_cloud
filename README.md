@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.16 (2022-07-15)
 * Missing object
 
 ### 0.0.15 (2022-07-14)

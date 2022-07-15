@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.15",
+        "version": "0.0.16",
         "news": {
+            "0.0.16": {
+                "en": "Missing object",
+                "de": "Fehlendes Objekt",
+                "ru": "Отсутствие объекта",
+                "pt": "Objeto perdido",
+                "nl": "Vermist object",
+                "fr": "Objet manquant",
+                "it": "Oggetto mancante",
+                "es": "Objeto perdido",
+                "pl": "Obiekty",
+                "zh-cn": "宣布反对"
+            },
             "0.0.15": {
                 "en": "Using external intervert information in ppv sum and consumption",
                 "de": "Verwendung externer Intervert-Informationen in ppv Summe und Verbrauch",
