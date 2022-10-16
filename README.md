@@ -20,6 +20,8 @@ Getting PV data from Alpha ESS Cloud
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* AuthToken as config for backup if login doesn't work
 
 ### 0.0.16 (2022-07-15)
 * Missing object

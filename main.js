@@ -33,6 +33,7 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.info("config system: " + this.config.system);
 		this.log.info("config username: " + this.config.username);
 		this.log.info("config password: " + this.config.password.substring(0, 3) + "*******");
+		this.log.info("config authtoken: " + this.config.authtoken);
 		this.log.info("config update_interval_live: " + this.config.update_interval_live);
 		this.log.info("config update_interval_statistics: " + this.config.update_interval_statistics);
 		this.authToken = "";
@@ -386,6 +387,7 @@ class AlphaEssCloud extends utils.Adapter {
 				}
 			}
 
+			this.authToken = instance.config.authtoken;
 			instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
 		});
 	}
