@@ -360,9 +360,17 @@ class AlphaEssCloud extends utils.Adapter {
 	 */
 	Login(callback = () => {}) {
 		const instance = this;
+		const crypto = require("crypto");
 		const url = "https://cloud.alphaess.com/api/Account/Login";
+
+		const authTimestamp = (new Date).getTime() / 1e3;
+		const authData = "LSZYDA95JVFQKV7PQNODZRDZIS4EDS0EED8BCWSS" + authTimestamp;
+		const authHash = crypto.createHash("sha512").update(authData).digest("hex");
+
 		const headers = {
-			"Content-Type":"application/json"
+			"Content-Type":"application/json",
+			"AuthTimestamp": parseInt(authTimestamp + ""),
+			"AuthSignature": "al8e4s" + authHash + "ui893ed"
 		};
 		const body = {
 			"username": this.config.username,
