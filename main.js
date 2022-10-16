@@ -387,8 +387,13 @@ class AlphaEssCloud extends utils.Adapter {
 				}
 			}
 
-			this.authToken = instance.config.authtoken;
 			instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
+			if (instance.config.authtoken.length > 0) {
+				instance.log.debug("Using auth token from config");
+				this.authToken = instance.config.authtoken;
+				if (callback)
+					callback();
+			}
 		});
 	}
 }
