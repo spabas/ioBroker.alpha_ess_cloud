@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.20 (2022-10-17)
 * AuthSignature needed since 2022-10-16
 
 ### 0.0.19 (2022-10-17)
