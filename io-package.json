@@ -293,7 +293,6 @@
         "system": "",
         "username": "",
         "password": "",
-        "authtoken": "",
         "update_interval_live": 60000,
         "update_interval_statistics": 300000
     },

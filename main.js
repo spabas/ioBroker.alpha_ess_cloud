@@ -33,7 +33,6 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.info("config system: " + this.config.system);
 		this.log.info("config username: " + this.config.username);
 		this.log.info("config password: " + this.config.password.substring(0, 3) + "*******");
-		this.log.info("config authtoken: " + this.config.authtoken);
 		this.log.info("config update_interval_live: " + this.config.update_interval_live);
 		this.log.info("config update_interval_statistics: " + this.config.update_interval_statistics);
 		this.authToken = "";
@@ -161,8 +160,7 @@ class AlphaEssCloud extends utils.Adapter {
 	getPowerData() {
 		const url = "https://cloud.alphaess.com/api/ESS/GetLastPowerDataBySN";
 		const headers = {
-			"Content-Type":"application/json",
-			"Authorization":"Bearer " + this.authToken
+			"Authorization":"Bearer " + this.authToken,
 		};
 
 		const body = {
@@ -173,7 +171,7 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
 
 		const instance = this;
-		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("ppv1", parseFloat(json.data.ppv1), true);
@@ -222,8 +220,7 @@ class AlphaEssCloud extends utils.Adapter {
 	getSummaryStatisticsData() {
 		const url = "https://cloud.alphaess.com/api/ESS/SticsSummeryDataForCustomer";
 		const headers = {
-			"Content-Type":"application/json",
-			"Authorization":"Bearer " + this.authToken
+			"Authorization":"Bearer " + this.authToken,
 		};
 
 		const body = {
@@ -236,7 +233,7 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
 
 		const instance = this;
-		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
@@ -260,8 +257,7 @@ class AlphaEssCloud extends utils.Adapter {
 	getPeriodStatisticsData() {
 		const url = "https://cloud.alphaess.com/api/Power/SticsByPeriod";
 		const headers = {
-			"Content-Type":"application/json",
-			"Authorization":"Bearer " + this.authToken
+			"Authorization":"Bearer " + this.authToken,
 		};
 
 		const body = {
@@ -277,7 +273,7 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
 
 		const instance = this;
-		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
@@ -309,8 +305,7 @@ class AlphaEssCloud extends utils.Adapter {
 	getAllTimeStatisticsData() {
 		const url = "https://cloud.alphaess.com/api/Power/SticsByPeriod";
 		const headers = {
-			"Content-Type":"application/json",
-			"Authorization":"Bearer " + this.authToken
+			"Authorization":"Bearer " + this.authToken,
 		};
 
 		const body = {
@@ -326,7 +321,7 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
 
 		const instance = this;
-		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
@@ -360,25 +355,17 @@ class AlphaEssCloud extends utils.Adapter {
 	 */
 	Login(callback = () => {}) {
 		const instance = this;
-		const crypto = require("crypto");
 		const url = "https://cloud.alphaess.com/api/Account/Login";
-
-		const authTimestamp = (new Date).getTime() / 1e3;
-		const authData = "LSZYDA95JVFQKV7PQNODZRDZIS4EDS0EED8BCWSS" + authTimestamp;
-		const authHash = crypto.createHash("sha512").update(authData).digest("hex");
-
-		const headers = {
-			"Content-Type":"application/json",
-			"AuthTimestamp": parseInt(authTimestamp + ""),
-			"AuthSignature": "al8e4s" + authHash + "ui893ed"
-		};
 		const body = {
 			"username": this.config.username,
 			"password": this.config.password
 		};
 
 		instance.log.debug("Start loggin in...");
-		request({url: url, headers: headers, method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+			instance.log.info("Error: " + error);
+			instance.log.info("Response: " + response);
+			instance.log.info("Body: " + body);
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				if (json && json.data) {
@@ -394,15 +381,29 @@ class AlphaEssCloud extends utils.Adapter {
 					instance.log.error("Login unsuccessfull - wrong credantials?");
 				}
 			}
-
-			instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
-			if (instance.config.authtoken.length > 0) {
-				instance.log.debug("Using auth token from config");
-				this.authToken = instance.config.authtoken;
-				if (callback)
-					callback();
+			else {
+				instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
 			}
 		});
+	}
+
+	GetHeaders(additionalHeaders) {
+		const crypto = require("crypto");
+
+		const headers = {
+			"Content-Type":"application/json",
+			"Connection": "keep-alive",
+			"Accept": "*/*",
+			"Cache-Control": "no-cache",
+			"AuthTimestamp": parseInt("" + (new Date).getTime() / 1e3),
+			"AuthSignature": ""
+		};
+
+		const data = "LSZYDA95JVFQKV7PQNODZRDZIS4EDS0EED8BCWSS" + headers.AuthTimestamp;
+		const hash = crypto.createHash("sha512").update(data).digest("hex");
+		headers.AuthSignature = "al8e4s" + hash + "ui893ed";
+
+		return Object.assign({}, headers, additionalHeaders);
 	}
 }
 
