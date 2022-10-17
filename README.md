@@ -20,6 +20,10 @@ Getting PV data from Alpha ESS Cloud
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* AuthSignature needed since 2022-10-16
+
 ### 0.0.19 (2022-10-17)
 * AuthSignature needed since 2022-10-16
 
