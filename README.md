@@ -21,6 +21,9 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* Alpha ESS API changes: POST to GET
+
 ### 0.0.20 (2022-10-17)
 * AuthSignature needed since 2022-10-16
 

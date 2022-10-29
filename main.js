@@ -158,20 +158,15 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	getPowerData() {
-		const url = "https://cloud.alphaess.com/api/ESS/GetLastPowerDataBySN";
+		const url = `https://cloud.alphaess.com/api/ESS/GetLastPowerDataBySN?noLoading=true&sys_sn=${this.config.system}`;
 		const headers = {
 			"Authorization":"Bearer " + this.authToken,
 		};
 
-		const body = {
-			sys_sn: this.config.system,
-			noLoading: true
-		};
-
-		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
+		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
 
 		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("ppv1", parseFloat(json.data.ppv1), true);
@@ -218,22 +213,16 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	getSummaryStatisticsData() {
-		const url = "https://cloud.alphaess.com/api/ESS/SticsSummeryDataForCustomer";
+		const today = new Date().toLocaleDateString("en-CA");
+		const url = `https://cloud.alphaess.com/api/ESS/SticsSummeryDataForCustomer?noLoading=true&showLoading=false&sys_sn=${this.config.system}&tday=${today}`;
 		const headers = {
 			"Authorization":"Bearer " + this.authToken,
 		};
 
-		const body = {
-			sys_sn: this.config.system,
-			noLoading: true,
-			showLoading: false,
-			tday: new Date().toLocaleDateString("en-CA")
-		};
-
-		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
+		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
 
 		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
@@ -255,25 +244,16 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	getPeriodStatisticsData() {
-		const url = "https://cloud.alphaess.com/api/Power/SticsByPeriod";
+		const todayDate = new Date().toLocaleDateString("en-CA");
+		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${todayDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
 		const headers = {
 			"Authorization":"Bearer " + this.authToken,
 		};
 
-		const body = {
-			SN: this.config.system,
-			noLoading: true,
-			beginDay: new Date().toLocaleDateString("en-CA"),
-			endDay: new Date().toLocaleDateString("en-CA"),
-			tDay: new Date().toLocaleDateString("en-CA"),
-			isOEM: 0,
-			userId: ""
-		};
-
-		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
+		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " +url);
 
 		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
@@ -303,25 +283,17 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	getAllTimeStatisticsData() {
-		const url = "https://cloud.alphaess.com/api/Power/SticsByPeriod";
+		const todayDate = new Date().toLocaleDateString("en-CA");
+		const beginDate = new Date(2022, 4, 30).toLocaleDateString("en-CA"); //30.05.2022
+		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${beginDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
 		const headers = {
 			"Authorization":"Bearer " + this.authToken,
 		};
 
-		const body = {
-			SN: this.config.system,
-			noLoading: true,
-			beginDay: new Date(2022, 4, 30).toLocaleDateString("en-CA"), //30.05.2022
-			endDay: new Date().toLocaleDateString("en-CA"),
-			tDay: new Date().toLocaleDateString("en-CA"),
-			isOEM: 0,
-			userId: ""
-		};
-
-		this.log.debug("Calling API with authorization token: " + this.authToken + " body: " + JSON.stringify(body));
+		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
 
 		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
+		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				instance.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
