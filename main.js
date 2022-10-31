@@ -371,7 +371,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"AuthSignature": ""
 		};
 
-		const data = "LSZYDA95JVFQKV7PQNODZRDZIS4EDS0EED8BCWSS" + headers.AuthTimestamp;
+		const data = "LS885ZYDA95JVFQKUIUUUV7PQNODZRDZIS4ERREDS0EED8BCWSS" + headers.AuthTimestamp;
 		const hash = crypto.createHash("sha512").update(data).digest("hex");
 		headers.AuthSignature = "al8e4s" + hash + "ui893ed";
 
