@@ -27,6 +27,9 @@ class AlphaEssCloud extends utils.Adapter {
 		// this.on("objectChange", this.onObjectChange.bind(this));
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
+
+		this.authToken = "";
+		this.signatureKey = "";
 	}
 
 	async onReady() {
@@ -35,7 +38,6 @@ class AlphaEssCloud extends utils.Adapter {
 		this.log.info("config password: " + this.config.password.substring(0, 3) + "*******");
 		this.log.info("config update_interval_live: " + this.config.update_interval_live);
 		this.log.info("config update_interval_statistics: " + this.config.update_interval_statistics);
-		this.authToken = "";
 		this.timer_data = null;
 		this.timer_statistics = null;
 
@@ -108,20 +110,47 @@ class AlphaEssCloud extends utils.Adapter {
 			native: {},
 		});
 
-		const instance = this;
-		this.Login(function() {
-			instance.getPowerData();
-			instance.getSummaryStatisticsData();
-			instance.getPeriodStatisticsData();
-			instance.timer_data = instance.setInterval(() => {
-				instance.getPowerData();
-			}, update_interval_live);
+		await this.setObjectNotExistsAsync("x_signature_key", {
+			type: "state",
+			common: {
+				name: "x_signature_key",
+				type: "string",
+				role: "text",
+				read: true,
+				write: false,
+			},
+			native: {},
+		});
 
-			instance.timer_statistics = instance.setInterval(() => {
+		await this.setObjectNotExistsAsync("x_auth_token", {
+			type: "state",
+			common: {
+				name: "x_auth_token",
+				type: "string",
+				role: "text",
+				read: true,
+				write: false,
+			},
+			native: {},
+		});
+
+		const instance = this;
+
+		this.GetSignatureKey(function() {
+			instance.Login(function() {
+				instance.getPowerData();
 				instance.getSummaryStatisticsData();
 				instance.getPeriodStatisticsData();
-				instance.getAllTimeStatisticsData();
-			}, update_interval_statistics);
+				instance.timer_data = instance.setInterval(() => {
+					instance.getPowerData();
+				}, update_interval_live);
+
+				instance.timer_statistics = instance.setInterval(() => {
+					instance.getSummaryStatisticsData();
+					instance.getPeriodStatisticsData();
+					instance.getAllTimeStatisticsData();
+				}, update_interval_statistics);
+			});
 		});
 	}
 
@@ -322,6 +351,54 @@ class AlphaEssCloud extends utils.Adapter {
 		});
 	}
 
+
+	GetSignatureKey(callback = () => {}) {
+		const url = "https://cloud.alphaess.com/";
+		const instance = this;
+
+		const APP_SRC = /<script src=(\/static\/js\/app\..*?\.js\?.*?)>/gis;
+		const APP_KEY = /"(LS.*?CWSS)"/gis;
+
+		this.log.info("Getting signature key from website: " + url);
+		request({url: url, method: "GET" }, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+
+				const jsRegex = APP_SRC.exec(body);
+				if (!jsRegex || jsRegex.length < 2) {
+					throw "We got an unexpected body while getting application script source.";
+				}
+
+				const scriptFile = jsRegex[1];
+				instance.log.info("We got the following application script source: " + scriptFile);
+
+				request({url: url + scriptFile, method: "GET" }, function(error, response, body) {
+					if (!error && response.statusCode == 200) {
+
+						const keyRegex = APP_KEY.exec(body);
+						if (!keyRegex || keyRegex.length < 2) {
+							throw "We got an unexpected body while getting signature key.";
+						}
+
+						instance.signatureKey = keyRegex[1];
+						instance.log.info("We got the following signature key: " + instance.signatureKey);
+						instance.setState("x_signature_key", instance.signatureKey, true);
+
+						if (callback)
+							callback();
+
+						return;
+					}
+					else {
+						instance.log.error("Error while getting signature key: " + response.statusCode + " - " + error);
+					}
+				});
+			}
+			else {
+				instance.log.error("Error while getting application script source: " + response.statusCode + " - " + error);
+			}
+		});
+	}
+
 	/**
 	 * @param {() => void} callback
 	 */
@@ -333,17 +410,17 @@ class AlphaEssCloud extends utils.Adapter {
 			"password": this.config.password
 		};
 
-		instance.log.debug("Start loggin in...");
+		instance.log.info("Start loggin in...");
 		request({url: url, headers: instance.GetHeaders(), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
-			instance.log.info("Error: " + error);
-			instance.log.info("Response: " + response);
-			instance.log.info("Body: " + body);
+			instance.log.debug("Body: " + body);
 			if (!error && response.statusCode == 200) {
 				const json = JSON.parse(body);
 				if (json && json.data) {
 					instance.authToken = json.data.AccessToken;
 					instance.log.info("Successfully loged in");
-					instance.log.debug("Fetched access token: " + instance.authToken);
+					instance.log.info("Fetched access token: " + instance.authToken);
+					instance.setState("x_auth_token", instance.authToken, true);
+
 					if (callback)
 						callback();
 
@@ -354,6 +431,8 @@ class AlphaEssCloud extends utils.Adapter {
 				}
 			}
 			else {
+				instance.log.debug("Response: " + JSON.parse(response));
+				instance.log.debug("Error: " + error);
 				instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
 			}
 		});
@@ -371,7 +450,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"AuthSignature": ""
 		};
 
-		const data = "LS885ZYDA95JVFQKUIUUUV7PQNODZRDZIS4ERREDS0EED8BCWSS" + headers.AuthTimestamp;
+		const data = this.signatureKey + headers.AuthTimestamp;
 		const hash = crypto.createHash("sha512").update(data).digest("hex");
 		headers.AuthSignature = "al8e4s" + hash + "ui893ed";
 
