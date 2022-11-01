@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.22",
+        "version": "0.0.23",
         "news": {
+            "0.0.23": {
+                "en": "Fetching Auth-Key from Alpha Cloud portal",
+                "de": "Fetching Auth-Key vom Alpha Cloud-Portal",
+                "ru": "Фетчинг Auth-Key от портала Alpha Cloud",
+                "pt": "Buscando Auth-Key do portal Alpha Cloud",
+                "nl": "Auth-Key van Alpha Cloud Portal",
+                "fr": "Obtenir Auth-Key du portail Alpha Cloud",
+                "it": "Presa Auth-Key dal portale Alpha Cloud",
+                "es": "Captura de Auth-Key del portal Alpha Cloud",
+                "pl": "Zdjęcie Auth-Key z Alpha Cloud",
+                "uk": "Захоплення Auth-Key від Alpha Cloud портал",
+                "zh-cn": "Fetching Auth-Key from Alpha Cloud"
+            },
             "0.0.22": {
                 "en": "Updated Auth-Key",
                 "de": "Aktualisierte Auth-Key",
@@ -236,18 +249,6 @@
                 "es": "Obtener datos estadísticos",
                 "pl": "Pobieranie danych statystycznych",
                 "zh-cn": "获取统计数据"
-            },
-            "0.0.3": {
-                "en": "Changed ReadMe",
-                "de": "LiesMich geändert",
-                "ru": "Изменен файл ReadMe",
-                "pt": "Leia-me alterado",
-                "nl": "Leesmij gewijzigd",
-                "fr": "Fichier LisezMoi modifié",
-                "it": "Leggimi modificato",
-                "es": "Léame cambiado",
-                "pl": "Zmieniono ReadMe",
-                "zh-cn": "更改自述文件"
             }
         },
         "title": "Alpha ESS Cloud",
