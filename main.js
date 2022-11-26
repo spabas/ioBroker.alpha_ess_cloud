@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 /*
  * Created with @iobroker/create-adapter v2.1.1
@@ -117,10 +117,11 @@ class AlphaEssCloud extends utils.Adapter {
 				type: "string",
 				role: "text",
 				read: true,
-				write: false,
+				write: true,
 			},
 			native: {},
 		});
+		this.subscribeStates("x_signature_key");
 
 		await this.setObjectNotExistsAsync("x_auth_token", {
 			type: "state",
@@ -136,7 +137,29 @@ class AlphaEssCloud extends utils.Adapter {
 
 		const instance = this;
 
-		this.GetSignatureKey(function() {
+		const signatatureKeyState = await this.getStateAsync("x_signature_key");
+		if (signatatureKeyState !== undefined && signatatureKeyState !== null)
+			this.signatureKey = `${signatatureKeyState.val}`;
+		else
+			this.signatureKey = "LS885ZYDA95JVFQKUIUUUV7PQNODZRDZIS4ERREDS0EED8BCWSS";
+
+		this.log.info("using signature key: " + this.signatureKey);
+		instance.Login(function() {
+			instance.getPowerData();
+			instance.getSummaryStatisticsData();
+			instance.getPeriodStatisticsData();
+			instance.timer_data = instance.setInterval(() => {
+				instance.getPowerData();
+			}, update_interval_live);
+
+			instance.timer_statistics = instance.setInterval(() => {
+				instance.getSummaryStatisticsData();
+				instance.getPeriodStatisticsData();
+				instance.getAllTimeStatisticsData();
+			}, update_interval_statistics);
+		});
+
+		/* this.GetSignatureKey(function() {
 			instance.Login(function() {
 				instance.getPowerData();
 				instance.getSummaryStatisticsData();
@@ -151,7 +174,7 @@ class AlphaEssCloud extends utils.Adapter {
 					instance.getAllTimeStatisticsData();
 				}, update_interval_statistics);
 			});
-		});
+		}); */
 	}
 
 	/**
@@ -180,6 +203,13 @@ class AlphaEssCloud extends utils.Adapter {
 		if (state) {
 			// The state was changed
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+
+			if (id == this.namespace + ".x_signature_key" && state.ack == false) {
+				this.signatureKey = `${state.val}`;
+				state.ack = true;
+				this.log.info("using signature key: " + this.signatureKey);
+			}
+
 		} else {
 			// The state was deleted
 			this.log.info(`state ${id} deleted`);
