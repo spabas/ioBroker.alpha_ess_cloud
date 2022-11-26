@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.23",
+        "version": "0.0.24",
         "news": {
+            "0.0.24": {
+                "en": "Fetching Auth-Key again from State or fixed",
+                "de": "Gebühren Auth-Key wieder aus dem Staat oder fest",
+                "ru": "Увлекаясь Auth-Key снова от государства или фиксированный",
+                "pt": "Apanhar Auth-Key novamente de Estado ou fixo",
+                "nl": "Auth-Key weer ophalen of gerepareerd",
+                "fr": "Récupérer Auth-Key de l'État ou fixe",
+                "it": "Fetching Auth-Key di nuovo da Stato o fisso",
+                "es": "Tomar Auth-Key de nuevo del estado o fijo",
+                "pl": "Odzyskanie Auth-Keya znów z Państwa lub zaktualizowano",
+                "uk": "Fetching Auth-Key знову від держави або фіксованого",
+                "zh-cn": "Fetching Auth-Key再次来自国家或固定地点"
+            },
             "0.0.23": {
                 "en": "Fetching Auth-Key from Alpha Cloud portal",
                 "de": "Fetching Auth-Key vom Alpha Cloud-Portal",
@@ -237,18 +250,6 @@
                 "es": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
                 "pl": "Daten direkt nach Adapter-Start Abrufen\nIntervalle bei Adapter-Ende loschen",
                 "zh-cn": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen"
-            },
-            "0.0.4": {
-                "en": "Getting statistics data",
-                "de": "Abrufen von Statistikdaten",
-                "ru": "Получение данных статистики",
-                "pt": "Obtendo dados estatísticos",
-                "nl": "Statistiekgegevens ophalen",
-                "fr": "Obtenir des données statistiques",
-                "it": "Ottenere dati statistici",
-                "es": "Obtener datos estadísticos",
-                "pl": "Pobieranie danych statystycznych",
-                "zh-cn": "获取统计数据"
             }
         },
         "title": "Alpha ESS Cloud",

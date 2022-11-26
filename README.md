@@ -20,7 +20,7 @@ Getting PV data from Alpha ESS Cloud
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.0.24 (2022-11-26)
 * Fetching Auth-Key again from State or fixed
 
 ### 0.0.23 (2022-11-01)
