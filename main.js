@@ -74,6 +74,24 @@ class AlphaEssCloud extends utils.Adapter {
 			});
 		}
 
+		const deviceStates = [
+			"sys_sn", "popv", "poinv", "mbat", "minv", "ems_status"
+		];
+
+		for (let i = 0; i < deviceStates.length; i++) {
+			await this.setObjectNotExistsAsync(deviceStates[i], {
+				type: "state",
+				common: {
+					name: stateNames[i],
+					type: "string",
+					role: "text",
+					read: true,
+					write: false,
+				},
+				native: {},
+			});
+		}
+
 		await this.setObjectNotExistsAsync("last_updated", {
 			type: "state",
 			common: {
@@ -156,6 +174,7 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.getSummaryStatisticsData();
 				instance.getPeriodStatisticsData();
 				instance.getAllTimeStatisticsData();
+				instance.getDeviceData();
 			}, update_interval_statistics);
 		});
 
@@ -329,6 +348,37 @@ class AlphaEssCloud extends utils.Adapter {
 				instance.setState("EoutToday", parseFloat(json.data.Eout), true);
 
 				instance.setState("statistics_last_updated", new Date().getTime(), true);
+			}
+			else if (response.statusCode == 401) {
+				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
+				instance.Login();
+			}
+			else
+			{
+				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
+			}
+		});
+	}
+
+	getDeviceData() {
+		const url = `https://cloud.alphaess.com/api/Account/GetCustomMenuESSlist`;
+		const headers = {
+			"Authorization":"Bearer " + this.authToken,
+		};
+
+		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
+
+		const instance = this;
+		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				const json = JSON.parse(body);
+				const data = json.data[0];
+				instance.setState("sys_sn", data.sys_sn, true);
+				instance.setState("popv", data.popv, true);
+				instance.setState("poinv", data.poinv, true);
+				instance.setState("mbat", data.mbat, true);
+				instance.setState("minv", data.minv, true);
+				instance.setState("ems_status", data.ems_status, true);
 			}
 			else if (response.statusCode == 401) {
 				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
