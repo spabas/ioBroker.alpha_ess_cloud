@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.25 (2023-02-23)
 * Fetching device / system infos
 
 ### 0.0.24 (2022-11-26)

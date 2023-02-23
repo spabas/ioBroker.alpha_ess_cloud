@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.24",
+        "version": "0.0.25",
         "news": {
+            "0.0.25": {
+                "en": "Fetching device / system infos",
+                "de": "Fetching Gerät / Systeminfos",
+                "ru": "Фетчинг устройство / системная информация",
+                "pt": "Dispositivo de busca / informações do sistema",
+                "nl": "Apparaat / systeem info",
+                "fr": "Appareillage / infos système",
+                "it": "Dispositivo di chiusura / informazioni di sistema",
+                "es": "Información del dispositivo / sistema",
+                "pl": "Urządzenie / systemowe informacje",
+                "uk": "Інформація про систему Fetching",
+                "zh-cn": "Fetching装置/系统fo"
+            },
             "0.0.24": {
                 "en": "Fetching Auth-Key again from State or fixed",
                 "de": "Gebühren Auth-Key wieder aus dem Staat oder fest",
@@ -238,18 +251,6 @@
                 "es": "Arreglar posible referencia nula",
                 "pl": "Napraw potencjalne zerowe odniesienie",
                 "zh-cn": "修复潜在的空引用"
-            },
-            "0.0.5": {
-                "en": "Daten direkt nach Adapter-Start abrufen \nIntervalle bei Adapter-Ende löschen",
-                "de": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
-                "ru": "Daten direct nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
-                "pt": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
-                "nl": "Daten direct nach Adapter-Start abrufen\nIntervalle bij Adapter-Ende los",
-                "fr": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
-                "it": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
-                "es": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen",
-                "pl": "Daten direkt nach Adapter-Start Abrufen\nIntervalle bei Adapter-Ende loschen",
-                "zh-cn": "Daten direkt nach Adapter-Start abrufen\nIntervalle bei Adapter-Ende löschen"
             }
         },
         "title": "Alpha ESS Cloud",
