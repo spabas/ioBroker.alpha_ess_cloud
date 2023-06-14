@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.25",
+        "version": "0.0.26",
         "news": {
+            "0.0.26": {
+                "en": "Try / catch / restart",
+                "de": "Versuchen / fangen / neu starten",
+                "ru": "Попробуйте / ловите / перезагрузите",
+                "pt": "Tente / pegar / reiniciar",
+                "nl": "Probeer / restart",
+                "fr": "Essayez / attraper / redémarrer",
+                "it": "Prova / cattura / riavvio",
+                "es": "Prueba / captura / reiniciar",
+                "pl": "Try / catch / restart (ang.)",
+                "uk": "Спробуйте / ловити / перезапустити",
+                "zh-cn": "干/流/休息"
+            },
             "0.0.25": {
                 "en": "Fetching device / system infos",
                 "de": "Fetching Gerät / Systeminfos",
@@ -239,18 +252,6 @@
                 "es": "Manejo de errores de inicio de sesión",
                 "pl": "Obsługa błędu logowania",
                 "zh-cn": "处理登录失败"
-            },
-            "0.0.6": {
-                "en": "Fix potential null reference",
-                "de": "Mögliche Nullreferenz beheben",
-                "ru": "Исправить потенциальную нулевую ссылку",
-                "pt": "Corrigir possível referência nula",
-                "nl": "Mogelijke nulreferentie repareren",
-                "fr": "Correction d'une référence nulle potentielle",
-                "it": "Correggere il potenziale riferimento nullo",
-                "es": "Arreglar posible referencia nula",
-                "pl": "Napraw potencjalne zerowe odniesienie",
-                "zh-cn": "修复潜在的空引用"
             }
         },
         "title": "Alpha ESS Cloud",
