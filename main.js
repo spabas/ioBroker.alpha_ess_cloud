@@ -162,38 +162,39 @@ class AlphaEssCloud extends utils.Adapter {
 			this.signatureKey = "LS885ZYDA95JVFQKUIUUUV7PQNODZRDZIS4ERREDS0EED8BCWSS";
 
 		this.log.info("using signature key: " + this.signatureKey);
-		instance.Login(function() {
-			instance.getPowerData();
-			instance.getSummaryStatisticsData();
-			instance.getPeriodStatisticsData();
-			instance.timer_data = instance.setInterval(() => {
-				instance.getPowerData();
-			}, update_interval_live);
 
-			instance.timer_statistics = instance.setInterval(() => {
-				instance.getSummaryStatisticsData();
-				instance.getPeriodStatisticsData();
-				instance.getAllTimeStatisticsData();
-				instance.getDeviceData();
-			}, update_interval_statistics);
-		});
-
-		/* this.GetSignatureKey(function() {
-			instance.Login(function() {
-				instance.getPowerData();
-				instance.getSummaryStatisticsData();
-				instance.getPeriodStatisticsData();
-				instance.timer_data = instance.setInterval(() => {
+		const loop = true;
+		while (loop == true)
+		{
+			try {
+				instance.log.info("Trying to log in");
+				instance.Login(function() {
+					instance.log.info("Logged in, fetching data");
 					instance.getPowerData();
-				}, update_interval_live);
-
-				instance.timer_statistics = instance.setInterval(() => {
 					instance.getSummaryStatisticsData();
 					instance.getPeriodStatisticsData();
-					instance.getAllTimeStatisticsData();
-				}, update_interval_statistics);
-			});
-		}); */
+					instance.timer_data = instance.setInterval(() => {
+						instance.getPowerData();
+					}, update_interval_live);
+
+					instance.timer_statistics = instance.setInterval(() => {
+						instance.getSummaryStatisticsData();
+						instance.getPeriodStatisticsData();
+						instance.getAllTimeStatisticsData();
+						instance.getDeviceData();
+					}, update_interval_statistics);
+				});
+			}
+			catch (exception) {
+				instance.log.error(exception);
+				instance.log.info("Trying to login again in 10 seconds");
+				await this.sleep(10000);
+			}
+		}
+	}
+
+	sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
 	/**
@@ -483,6 +484,7 @@ class AlphaEssCloud extends utils.Adapter {
 	 * @param {() => void} callback
 	 */
 	Login(callback = () => {}) {
+
 		const instance = this;
 		const url = "https://cloud.alphaess.com/api/Account/Login";
 		const body = {
