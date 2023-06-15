@@ -21,6 +21,9 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* Revert last commit
+
 ### 0.0.26 (2023-06-15)
 * Try / catch / restart
 
