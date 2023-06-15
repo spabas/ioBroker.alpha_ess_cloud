@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.26",
+        "version": "0.0.27",
         "news": {
+            "0.0.27": {
+                "en": "Revert last commit",
+                "de": "Zurück zum letzten Commit",
+                "ru": "Revert последний коммит",
+                "pt": "Reverter o último commit",
+                "nl": "Eerwaarde begaan",
+                "fr": "Revertissez le dernier commit",
+                "it": "Revertire l'ultima commit",
+                "es": "Revertir el último compromiso",
+                "pl": "Ostatnia sprawa",
+                "uk": "Зворотній зв'язок",
+                "zh-cn": "防止最后承诺"
+            },
             "0.0.26": {
                 "en": "Try / catch / restart",
                 "de": "Versuchen / fangen / neu starten",
@@ -240,18 +253,6 @@
                 "es": "Nuevos valores estadísticos",
                 "pl": "Nowe wartości statystyczne",
                 "zh-cn": "新的统计值"
-            },
-            "0.0.7": {
-                "en": "Handling login failure",
-                "de": "Behandlung von Anmeldefehlern",
-                "ru": "Обработка ошибки входа",
-                "pt": "Lidando com falha de login",
-                "nl": "Inlogfout verwerken",
-                "fr": "Gestion des échecs de connexion",
-                "it": "Gestione dell'errore di accesso",
-                "es": "Manejo de errores de inicio de sesión",
-                "pl": "Obsługa błędu logowania",
-                "zh-cn": "处理登录失败"
             }
         },
         "title": "Alpha ESS Cloud",
