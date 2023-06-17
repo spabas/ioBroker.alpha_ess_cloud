@@ -8,6 +8,7 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 const request = require("request");
+const axios = require("axios").default;
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
@@ -153,8 +154,6 @@ class AlphaEssCloud extends utils.Adapter {
 			native: {},
 		});
 
-		const instance = this;
-
 		const signatatureKeyState = await this.getStateAsync("x_signature_key");
 		if (signatatureKeyState !== undefined && signatatureKeyState !== null)
 			this.signatureKey = `${signatatureKeyState.val}`;
@@ -162,39 +161,33 @@ class AlphaEssCloud extends utils.Adapter {
 			this.signatureKey = "LS885ZYDA95JVFQKUIUUUV7PQNODZRDZIS4ERREDS0EED8BCWSS";
 
 		this.log.info("using signature key: " + this.signatureKey);
-		instance.Login(function() {
-			instance.getPowerData();
-			instance.getSummaryStatisticsData();
-			instance.getPeriodStatisticsData();
-			instance.timer_data = instance.setInterval(() => {
+
+		const instance = this;
+
+		try {
+			await this.Login();
+
+			await this.getPowerData();
+			await this.getSummaryStatisticsData();
+			await this.getPeriodStatisticsData();
+
+			this.timer_data = this.setInterval(() => {
 				instance.getPowerData();
 			}, update_interval_live);
 
-			instance.timer_statistics = instance.setInterval(() => {
+			this.timer_statistics = this.setInterval(() => {
 				instance.getSummaryStatisticsData();
 				instance.getPeriodStatisticsData();
 				instance.getAllTimeStatisticsData();
 				instance.getDeviceData();
 			}, update_interval_statistics);
-		});
-
-		/* this.GetSignatureKey(function() {
-			instance.Login(function() {
-				instance.getPowerData();
-				instance.getSummaryStatisticsData();
-				instance.getPeriodStatisticsData();
-				instance.timer_data = instance.setInterval(() => {
-					instance.getPowerData();
-				}, update_interval_live);
-
-				instance.timer_statistics = instance.setInterval(() => {
-					instance.getSummaryStatisticsData();
-					instance.getPeriodStatisticsData();
-					instance.getAllTimeStatisticsData();
-				}, update_interval_statistics);
-			});
-		}); */
+		}
+		catch (error) {
+			instance.log.error("Error while processing Alpha ESS API: " + error);
+		}
 	}
+
+	Process
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
@@ -235,200 +228,218 @@ class AlphaEssCloud extends utils.Adapter {
 		}
 	}
 
-	getPowerData() {
+	async getPowerData() {
 		const url = `https://cloud.alphaess.com/api/ESS/GetLastPowerDataBySN?noLoading=true&sys_sn=${this.config.system}`;
-		const headers = {
-			"Authorization":"Bearer " + this.authToken,
+		const config = {
+			headers: this.GetHeaders({
+				"Authorization":"Bearer " + this.authToken,
+			})
 		};
 
 		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
 
-		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				const json = JSON.parse(body);
-				instance.setState("ppv1", parseFloat(json.data.ppv1), true);
-				instance.setState("ppv2", parseFloat(json.data.ppv2), true);
-				instance.setState("ppv3", parseFloat(json.data.ppv3), true);
-				instance.setState("ppv4", parseFloat(json.data.ppv4), true);
-				instance.setState("ppv_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4), true);
+		const result = await axios.get(url, config);
 
-				instance.setState("ppv_and_dc_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_dc), true);
+		if (result.status == 200)
+		{
+			const json = result.data;
 
-				instance.setState("preal_l1", parseFloat(json.data.preal_l1), true);
-				instance.setState("preal_l2", parseFloat(json.data.preal_l2), true);
-				instance.setState("preal_l3", parseFloat(json.data.preal_l3), true);
-				instance.setState("preal_sum", parseFloat(json.data.preal_l1) + parseFloat(json.data.preal_l2) + parseFloat(json.data.preal_l3), true);
+			this.setState("ppv1", parseFloat(json.data.ppv1), true);
+			this.setState("ppv2", parseFloat(json.data.ppv2), true);
+			this.setState("ppv3", parseFloat(json.data.ppv3), true);
+			this.setState("ppv4", parseFloat(json.data.ppv4), true);
+			this.setState("ppv_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4), true);
 
-				instance.setState("pmeter_l1", parseFloat(json.data.pmeter_l1), true);
-				instance.setState("pmeter_l2", parseFloat(json.data.pmeter_l2), true);
-				instance.setState("pmeter_l3", parseFloat(json.data.pmeter_l3), true);
-				instance.setState("pmeter_sum", parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3), true);
-				instance.setState("pmeter_dc", parseFloat(json.data.pmeter_dc), true);
+			this.setState("ppv_and_dc_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_dc), true);
 
-				instance.setState("soc", parseFloat(json.data.soc), true);
-				instance.setState("pbat", parseFloat(json.data.pbat), true);
+			this.setState("preal_l1", parseFloat(json.data.preal_l1), true);
+			this.setState("preal_l2", parseFloat(json.data.preal_l2), true);
+			this.setState("preal_l3", parseFloat(json.data.preal_l3), true);
+			this.setState("preal_sum", parseFloat(json.data.preal_l1) + parseFloat(json.data.preal_l2) + parseFloat(json.data.preal_l3), true);
 
-				instance.setState("ev1_power", parseFloat(json.data.ev1_power), true);
-				instance.setState("ev2_power", parseFloat(json.data.ev2_power), true);
-				instance.setState("ev3_power", parseFloat(json.data.ev3_power), true);
-				instance.setState("ev4_power", parseFloat(json.data.ev4_power), true);
-				instance.setState("ev_power_sum", parseFloat(json.data.ev1_power) + parseFloat(json.data.ev2_power) + parseFloat(json.data.ev3_power) + parseFloat(json.data.ev4_power), true);
+			this.setState("pmeter_l1", parseFloat(json.data.pmeter_l1), true);
+			this.setState("pmeter_l2", parseFloat(json.data.pmeter_l2), true);
+			this.setState("pmeter_l3", parseFloat(json.data.pmeter_l3), true);
+			this.setState("pmeter_sum", parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3), true);
+			this.setState("pmeter_dc", parseFloat(json.data.pmeter_dc), true);
 
-				instance.setState("home_load", parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3) + parseFloat(json.data.pbat) + parseFloat(json.data.pmeter_dc), true);
+			this.setState("soc", parseFloat(json.data.soc), true);
+			this.setState("pbat", parseFloat(json.data.pbat), true);
 
-				instance.setState("last_updated", new Date().getTime(), true);
-			}
-			else if (response.statusCode == 401) {
-				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
-				instance.Login();
-			}
-			else
-			{
-				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
-			}
-		});
+			this.setState("ev1_power", parseFloat(json.data.ev1_power), true);
+			this.setState("ev2_power", parseFloat(json.data.ev2_power), true);
+			this.setState("ev3_power", parseFloat(json.data.ev3_power), true);
+			this.setState("ev4_power", parseFloat(json.data.ev4_power), true);
+			this.setState("ev_power_sum", parseFloat(json.data.ev1_power) + parseFloat(json.data.ev2_power) + parseFloat(json.data.ev3_power) + parseFloat(json.data.ev4_power), true);
+
+			this.setState("home_load", parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3) + parseFloat(json.data.pbat) + parseFloat(json.data.pmeter_dc), true);
+
+			this.setState("last_updated", new Date().getTime(), true);
+		}
+		else if (result.status == 401) {
+			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
+			await this.Login();
+		}
+		else
+		{
+			this.log.error("Error Calling API: " + result.status + " - " + result.statusText);
+		}
 	}
 
-	getSummaryStatisticsData() {
+	async getSummaryStatisticsData() {
 		const today = new Date().toLocaleDateString("en-CA");
 		const url = `https://cloud.alphaess.com/api/ESS/SticsSummeryDataForCustomer?noLoading=true&showLoading=false&sys_sn=${this.config.system}&tday=${today}`;
-		const headers = {
-			"Authorization":"Bearer " + this.authToken,
+
+		const config = {
+			headers: this.GetHeaders({
+				"Authorization":"Bearer " + this.authToken,
+			})
 		};
 
 		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
 
-		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				const json = JSON.parse(body);
-				instance.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
-				instance.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
-				instance.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
-				instance.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
+		const result = await axios.get(url, config);
 
-				instance.setState("statistics_last_updated", new Date().getTime(), true);
-			}
-			else if (response.statusCode == 401) {
-				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
-				instance.Login();
-			}
-			else
-			{
-				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
-			}
-		});
+		if (result.status == 200)
+		{
+			const json = result.data;
+			this.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
+			this.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
+			this.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
+			this.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
+
+			this.setState("statistics_last_updated", new Date().getTime(), true);
+		}
+		else if (result.status == 401) {
+			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
+			await this.Login();
+		}
+		else
+		{
+			this.log.error("Error Calling API: " + result.status + " - " + result.statusText);
+		}
 	}
 
-	getPeriodStatisticsData() {
+	async getPeriodStatisticsData() {
 		const todayDate = new Date().toLocaleDateString("en-CA");
 		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${todayDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
-		const headers = {
-			"Authorization":"Bearer " + this.authToken,
-		};
 
-		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " +url);
-
-		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				const json = JSON.parse(body);
-				instance.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
-				instance.setState("EselfSufficiencyToday", parseFloat(json.data.EselfSufficiency), true);
-				instance.setState("EGrid2LoadToday", parseFloat(json.data.EGrid2Load), true);
-				instance.setState("EGridChargeToday", parseFloat(json.data.EGridCharge), true);
-				instance.setState("EHomeLoadToday", parseFloat(json.data.EHomeLoad), true);
-				instance.setState("EbatToday", parseFloat(json.data.Ebat), true);
-				instance.setState("EchargeToday", parseFloat(json.data.Echarge), true);
-				instance.setState("EeffToday", parseFloat(json.data.Eeff), true);
-				instance.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
-				instance.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
-				instance.setState("EpvTToday", parseFloat(json.data.EpvT), true);
-				instance.setState("EoutToday", parseFloat(json.data.Eout), true);
-
-				instance.setState("statistics_last_updated", new Date().getTime(), true);
-			}
-			else if (response.statusCode == 401) {
-				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
-				instance.Login();
-			}
-			else
-			{
-				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
-			}
-		});
-	}
-
-	getDeviceData() {
-		const url = `https://cloud.alphaess.com/api/Account/GetCustomMenuESSlist`;
-		const headers = {
-			"Authorization":"Bearer " + this.authToken,
+		const config = {
+			headers: this.GetHeaders({
+				"Authorization":"Bearer " + this.authToken,
+			})
 		};
 
 		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
 
-		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				const json = JSON.parse(body);
-				const data = json.data[0];
-				instance.setState("sys_sn", data.sys_sn, true);
-				instance.setState("popv", data.popv, true);
-				instance.setState("poinv", data.poinv, true);
-				instance.setState("mbat", data.mbat, true);
-				instance.setState("minv", data.minv, true);
-				instance.setState("ems_status", data.ems_status, true);
-			}
-			else if (response.statusCode == 401) {
-				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
-				instance.Login();
-			}
-			else
-			{
-				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
-			}
-		});
+		const result = await axios.get(url, config);
+
+		if (result.status == 200)
+		{
+			const json = result.data;
+
+			this.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
+			this.setState("EselfSufficiencyToday", parseFloat(json.data.EselfSufficiency), true);
+			this.setState("EGrid2LoadToday", parseFloat(json.data.EGrid2Load), true);
+			this.setState("EGridChargeToday", parseFloat(json.data.EGridCharge), true);
+			this.setState("EHomeLoadToday", parseFloat(json.data.EHomeLoad), true);
+			this.setState("EbatToday", parseFloat(json.data.Ebat), true);
+			this.setState("EchargeToday", parseFloat(json.data.Echarge), true);
+			this.setState("EeffToday", parseFloat(json.data.Eeff), true);
+			this.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
+			this.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
+			this.setState("EpvTToday", parseFloat(json.data.EpvT), true);
+			this.setState("EoutToday", parseFloat(json.data.Eout), true);
+
+			this.setState("statistics_last_updated", new Date().getTime(), true);
+		}
+		else if (result.status == 401) {
+			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
+			await this.Login();
+		}
+		else
+		{
+			this.log.error("Error Calling API: " + result.status + " - " + result.statusText);
+		}
 	}
 
-	getAllTimeStatisticsData() {
+	async getDeviceData() {
+		const url = `https://cloud.alphaess.com/api/Account/GetCustomMenuESSlist`;
+
+		const config = {
+			headers: this.GetHeaders({
+				"Authorization":"Bearer " + this.authToken,
+			})
+		};
+
+		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
+
+		const result = await axios.get(url, config);
+
+		if (result.status == 200)
+		{
+			const json = result.data;
+
+			const data = json.data[0];
+			this.setState("sys_sn", data.sys_sn, true);
+			this.setState("popv", data.popv, true);
+			this.setState("poinv", data.poinv, true);
+			this.setState("mbat", data.mbat, true);
+			this.setState("minv", data.minv, true);
+			this.setState("ems_status", data.ems_status, true);
+		}
+		else if (result.status == 401) {
+			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
+			await this.Login();
+		}
+		else
+		{
+			this.log.error("Error Calling API: " + result.status + " - " + result.statusText);
+		}
+	}
+
+	async getAllTimeStatisticsData() {
 		const todayDate = new Date().toLocaleDateString("en-CA");
 		const beginDate = new Date(2022, 4, 30).toLocaleDateString("en-CA"); //30.05.2022
 		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${beginDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
-		const headers = {
-			"Authorization":"Bearer " + this.authToken,
+
+		const config = {
+			headers: this.GetHeaders({
+				"Authorization":"Bearer " + this.authToken,
+			})
 		};
 
 		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
 
-		const instance = this;
-		request({url: url, headers: instance.GetHeaders(headers), method: "GET"}, function(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				const json = JSON.parse(body);
-				instance.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
-				instance.setState("EselfSufficiencyAllTime", parseFloat(json.data.EselfSufficiency), true);
-				instance.setState("EGrid2LoadAllTime", parseFloat(json.data.EGrid2Load), true);
-				instance.setState("EGridChargeAllTime", parseFloat(json.data.EGridCharge), true);
-				instance.setState("EHomeLoadAllTime", parseFloat(json.data.EHomeLoad), true);
-				instance.setState("EbatAllTime", parseFloat(json.data.Ebat), true);
-				instance.setState("EchargeAllTime", parseFloat(json.data.Echarge), true);
-				instance.setState("EeffAllTime", parseFloat(json.data.Eeff), true);
-				instance.setState("Epv2loadAllTime", parseFloat(json.data.Epv2load), true);
-				instance.setState("EpvchargeAllTime", parseFloat(json.data.Epvcharge), true);
-				instance.setState("EpvTAllTime", parseFloat(json.data.EpvT), true);
-				instance.setState("EoutAllTime", parseFloat(json.data.Eout), true);
+		const result = await axios.get(url, config);
 
-				instance.setState("statistics_alltime_last_updated", new Date().getTime(), true);
-			}
-			else if (response.statusCode == 401) {
-				instance.log.debug("Unauthorized access, try loggin in: " + response.statusCode + " - " + error);
-				instance.Login();
-			}
-			else
-			{
-				instance.log.error("Error Calling API: " + response.statusCode + " - " + error);
-			}
-		});
+		if (result.status == 200)
+		{
+			const json = result.data;
+
+			this.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
+			this.setState("EselfSufficiencyAllTime", parseFloat(json.data.EselfSufficiency), true);
+			this.setState("EGrid2LoadAllTime", parseFloat(json.data.EGrid2Load), true);
+			this.setState("EGridChargeAllTime", parseFloat(json.data.EGridCharge), true);
+			this.setState("EHomeLoadAllTime", parseFloat(json.data.EHomeLoad), true);
+			this.setState("EbatAllTime", parseFloat(json.data.Ebat), true);
+			this.setState("EchargeAllTime", parseFloat(json.data.Echarge), true);
+			this.setState("EeffAllTime", parseFloat(json.data.Eeff), true);
+			this.setState("Epv2loadAllTime", parseFloat(json.data.Epv2load), true);
+			this.setState("EpvchargeAllTime", parseFloat(json.data.Epvcharge), true);
+			this.setState("EpvTAllTime", parseFloat(json.data.EpvT), true);
+			this.setState("EoutAllTime", parseFloat(json.data.Eout), true);
+
+			this.setState("statistics_alltime_last_updated", new Date().getTime(), true);
+		}
+		else if (result.status == 401) {
+			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
+			await this.Login();
+		}
+		else
+		{
+			this.log.error("Error Calling API: " + result.status + " - " + result.statusText);
+		}
 	}
 
 
@@ -479,43 +490,40 @@ class AlphaEssCloud extends utils.Adapter {
 		});
 	}
 
-	/**
-	 * @param {() => void} callback
-	 */
-	Login(callback = () => {}) {
+	async Login() {
 		const instance = this;
 		const url = "https://cloud.alphaess.com/api/Account/Login";
 		const body = {
 			"username": this.config.username,
 			"password": this.config.password
 		};
+		const config = {
+			headers: instance.GetHeaders()
+		};
 
 		instance.log.info("Start loggin in...");
-		request({url: url, headers: instance.GetHeaders(), method: "POST", body: JSON.stringify(body)}, function(error, response, body) {
-			instance.log.debug("Body: " + body);
-			if (!error && response.statusCode == 200) {
-				const json = JSON.parse(body);
-				if (json && json.data) {
-					instance.authToken = json.data.AccessToken;
-					instance.log.info("Successfully loged in");
-					instance.log.info("Fetched access token: " + instance.authToken);
-					instance.setState("x_auth_token", instance.authToken, true);
 
-					if (callback)
-						callback();
+		const result = await axios.post(url, body, config);
 
-					return;
-				}
-				else {
-					instance.log.error("Login unsuccessfull - wrong credantials?");
-				}
+		if (result.status == 200) {
+			const payload = result.data;
+			const authToken = payload.data.AccessToken;
+
+			if (authToken)
+			{
+				instance.authToken = authToken;
+
+				instance.log.info("Successfully loged in");
+				instance.log.info("Fetched access token: " + authToken);
+				await instance.setStateAsync("x_auth_token", authToken, true);
 			}
 			else {
-				instance.log.debug("Response: " + JSON.parse(response));
-				instance.log.debug("Error: " + error);
-				instance.log.error("Error while loggin in: " + response.statusCode + " - " + error);
+				instance.log.error("Login unsuccessfull - we didn't receive an auth token, wrong credantials?");
 			}
-		});
+		}
+		else {
+			instance.log.error("Error while loggin in: " + result.status + " - " + result.statusText);
+		}
 	}
 
 	GetHeaders(additionalHeaders) {
