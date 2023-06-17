@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.28 (2023-06-17)
 * Refactoring to use axios instead of request 
 * Exception handling
 

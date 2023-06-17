@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.27",
+        "version": "0.0.28",
         "news": {
+            "0.0.28": {
+                "en": "Refactoring to use axios instead of request \nException handling",
+                "de": "Refactoring axios anstelle von Anfrage verwenden\nAußergewöhnliche Handhabung",
+                "ru": "Рефакторинг для использования axios вместо запроса\nИсключение обработки",
+                "pt": "Refactoring para usar axios em vez de solicitar\nManuseio de exceções",
+                "nl": "Axios in plaats van verzoek\nUitzondering",
+                "fr": "Refactoring to use axios instead of request\nTraitement des exceptions",
+                "it": "Refactoring per usare assios invece di richiesta\nTrattamento delle eccezioni",
+                "es": "Refactoring para utilizar axios en lugar de petición\nManejo de excepciones",
+                "pl": "Zamiast wymagać korzystania z axiosu zamiast żądania\nObsługa",
+                "uk": "Рефакторинг замість запиту\nЕксплуатація",
+                "zh-cn": "证明使用焦虑而不是要求\n例外处理"
+            },
             "0.0.27": {
                 "en": "Revert last commit",
                 "de": "Zurück zum letzten Commit",
@@ -231,18 +244,6 @@
                 "zh-cn": "新的统计值（修复 0.0.9）"
             },
             "0.0.9": {
-                "en": "New statistic values",
-                "de": "Neue Statistikwerte",
-                "ru": "Новые статистические значения",
-                "pt": "Novos valores estatísticos",
-                "nl": "Nieuwe statistische waarden",
-                "fr": "Nouvelles valeurs statistiques",
-                "it": "Nuovi valori statistici",
-                "es": "Nuevos valores estadísticos",
-                "pl": "Nowe wartości statystyczne",
-                "zh-cn": "新的统计值"
-            },
-            "0.0.8": {
                 "en": "New statistic values",
                 "de": "Neue Statistikwerte",
                 "ru": "Новые статистические значения",
