@@ -58,7 +58,8 @@ class AlphaEssCloud extends utils.Adapter {
 			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum", "home_load",
 			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
 			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday",
-			"EselfConsumptionAllTime", "EselfSufficiencyAllTime", "EGrid2LoadAllTime", "EGridChargeAllTime", "EHomeLoadAllTime", "EbatAllTime", "EchargeAllTime", "EeffAllTime", "Epv2loadAllTime", "EpvchargeAllTime", "EpvTAllTime", "EoutAllTime"
+			"EselfConsumptionAllTime", "EselfSufficiencyAllTime", "EGrid2LoadAllTime", "EGridChargeAllTime", "EHomeLoadAllTime", "EbatAllTime", "EchargeAllTime", "EeffAllTime", "Epv2loadAllTime", "EpvchargeAllTime", "EpvTAllTime", "EoutAllTime",
+			"popv", "poinv"
 		];
 
 		for (let i = 0; i < stateNames.length; i++) {
@@ -76,7 +77,7 @@ class AlphaEssCloud extends utils.Adapter {
 		}
 
 		const deviceStates = [
-			"sys_sn", "popv", "poinv", "mbat", "minv", "ems_status"
+			"sys_sn", "mbat", "minv", "ems_status"
 		];
 
 		for (let i = 0; i < deviceStates.length; i++) {
@@ -165,29 +166,38 @@ class AlphaEssCloud extends utils.Adapter {
 		const instance = this;
 
 		try {
-			await this.Login();
+			if (this.config.system && this.config.username && this.config.password)
+			{
+				await this.Login();
 
-			await this.getPowerData();
-			await this.getSummaryStatisticsData();
-			await this.getPeriodStatisticsData();
+				await this.getPowerData();
+				await this.getSummaryStatisticsData();
+				await this.getPeriodStatisticsData();
 
-			this.timer_data = this.setInterval(() => {
-				instance.getPowerData();
-			}, update_interval_live);
+				if (update_interval_live)
+				{
+					this.timer_data = this.setInterval(() => {
+						instance.getPowerData();
+					}, update_interval_live);
+				}
 
-			this.timer_statistics = this.setInterval(() => {
-				instance.getSummaryStatisticsData();
-				instance.getPeriodStatisticsData();
-				instance.getAllTimeStatisticsData();
-				instance.getDeviceData();
-			}, update_interval_statistics);
+				if (update_interval_statistics)
+				{
+					this.timer_statistics = this.setInterval(() => {
+						instance.getSummaryStatisticsData();
+						instance.getPeriodStatisticsData();
+						instance.getAllTimeStatisticsData();
+						instance.getDeviceData();
+					}, update_interval_statistics);
+				}
+			}
+			else
+				instance.log.error("Missing credentials in config");
 		}
 		catch (error) {
 			instance.log.error("Error while processing Alpha ESS API: " + error);
 		}
 	}
-
-	Process
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
@@ -443,52 +453,52 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 
-	GetSignatureKey(callback = () => {}) {
-		const url = "https://cloud.alphaess.com/";
-		const instance = this;
+	// GetSignatureKey(callback = () => {}) {
+	// 	const url = "https://cloud.alphaess.com/";
+	// 	const instance = this;
 
-		const APP_SRC = /<script src=(\/static\/js\/app\..*?\.js\?.*?)>/gis;
-		const APP_KEY = /"(LS.*?CWSS)"/gis;
+	// 	const APP_SRC = /<script src=(\/static\/js\/app\..*?\.js\?.*?)>/gis;
+	// 	const APP_KEY = /"(LS.*?CWSS)"/gis;
 
-		this.log.info("Getting signature key from website: " + url);
-		request({url: url, method: "GET" }, function(error, response, body) {
-			if (!error && response.statusCode == 200) {
+	// 	this.log.info("Getting signature key from website: " + url);
+	// 	request({url: url, method: "GET" }, function(error, response, body) {
+	// 		if (!error && response.statusCode == 200) {
 
-				const jsRegex = APP_SRC.exec(body);
-				if (!jsRegex || jsRegex.length < 2) {
-					throw "We got an unexpected body while getting application script source.";
-				}
+	// 			const jsRegex = APP_SRC.exec(body);
+	// 			if (!jsRegex || jsRegex.length < 2) {
+	// 				throw "We got an unexpected body while getting application script source.";
+	// 			}
 
-				const scriptFile = jsRegex[1];
-				instance.log.info("We got the following application script source: " + scriptFile);
+	// 			const scriptFile = jsRegex[1];
+	// 			instance.log.info("We got the following application script source: " + scriptFile);
 
-				request({url: url + scriptFile, method: "GET" }, function(error, response, body) {
-					if (!error && response.statusCode == 200) {
+	// 			request({url: url + scriptFile, method: "GET" }, function(error, response, body) {
+	// 				if (!error && response.statusCode == 200) {
 
-						const keyRegex = APP_KEY.exec(body);
-						if (!keyRegex || keyRegex.length < 2) {
-							throw "We got an unexpected body while getting signature key.";
-						}
+	// 					const keyRegex = APP_KEY.exec(body);
+	// 					if (!keyRegex || keyRegex.length < 2) {
+	// 						throw "We got an unexpected body while getting signature key.";
+	// 					}
 
-						instance.signatureKey = keyRegex[1];
-						instance.log.info("We got the following signature key: " + instance.signatureKey);
-						instance.setState("x_signature_key", instance.signatureKey, true);
+	// 					instance.signatureKey = keyRegex[1];
+	// 					instance.log.info("We got the following signature key: " + instance.signatureKey);
+	// 					instance.setState("x_signature_key", instance.signatureKey, true);
 
-						if (callback)
-							callback();
+	// 					if (callback)
+	// 						callback();
 
-						return;
-					}
-					else {
-						instance.log.error("Error while getting signature key: " + response.statusCode + " - " + error);
-					}
-				});
-			}
-			else {
-				instance.log.error("Error while getting application script source: " + response.statusCode + " - " + error);
-			}
-		});
-	}
+	// 					return;
+	// 				}
+	// 				else {
+	// 					instance.log.error("Error while getting signature key: " + response.statusCode + " - " + error);
+	// 				}
+	// 			});
+	// 		}
+	// 		else {
+	// 			instance.log.error("Error while getting application script source: " + response.statusCode + " - " + error);
+	// 		}
+	// 	});
+	// }
 
 	async Login() {
 		const instance = this;
