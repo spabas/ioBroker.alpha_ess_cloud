@@ -7,7 +7,7 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
-const request = require("request");
+//const request = require("request");
 const axios = require("axios").default;
 
 // Load your modules here, e.g.:
@@ -254,37 +254,41 @@ class AlphaEssCloud extends utils.Adapter {
 		{
 			const json = result.data;
 
-			this.setState("ppv1", parseFloat(json.data.ppv1), true);
-			this.setState("ppv2", parseFloat(json.data.ppv2), true);
-			this.setState("ppv3", parseFloat(json.data.ppv3), true);
-			this.setState("ppv4", parseFloat(json.data.ppv4), true);
-			this.setState("ppv_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4), true);
+			try {
+				this.setState("ppv1", parseFloat(json.data.ppv1), true);
+				this.setState("ppv2", parseFloat(json.data.ppv2), true);
+				this.setState("ppv3", parseFloat(json.data.ppv3), true);
+				this.setState("ppv4", parseFloat(json.data.ppv4), true);
+				this.setState("ppv_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4), true);
 
-			this.setState("ppv_and_dc_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_dc), true);
+				this.setState("ppv_and_dc_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_dc), true);
 
-			this.setState("preal_l1", parseFloat(json.data.preal_l1), true);
-			this.setState("preal_l2", parseFloat(json.data.preal_l2), true);
-			this.setState("preal_l3", parseFloat(json.data.preal_l3), true);
-			this.setState("preal_sum", parseFloat(json.data.preal_l1) + parseFloat(json.data.preal_l2) + parseFloat(json.data.preal_l3), true);
+				this.setState("preal_l1", parseFloat(json.data.preal_l1), true);
+				this.setState("preal_l2", parseFloat(json.data.preal_l2), true);
+				this.setState("preal_l3", parseFloat(json.data.preal_l3), true);
+				this.setState("preal_sum", parseFloat(json.data.preal_l1) + parseFloat(json.data.preal_l2) + parseFloat(json.data.preal_l3), true);
 
-			this.setState("pmeter_l1", parseFloat(json.data.pmeter_l1), true);
-			this.setState("pmeter_l2", parseFloat(json.data.pmeter_l2), true);
-			this.setState("pmeter_l3", parseFloat(json.data.pmeter_l3), true);
-			this.setState("pmeter_sum", parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3), true);
-			this.setState("pmeter_dc", parseFloat(json.data.pmeter_dc), true);
+				this.setState("pmeter_l1", parseFloat(json.data.pmeter_l1), true);
+				this.setState("pmeter_l2", parseFloat(json.data.pmeter_l2), true);
+				this.setState("pmeter_l3", parseFloat(json.data.pmeter_l3), true);
+				this.setState("pmeter_sum", parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3), true);
+				this.setState("pmeter_dc", parseFloat(json.data.pmeter_dc), true);
 
-			this.setState("soc", parseFloat(json.data.soc), true);
-			this.setState("pbat", parseFloat(json.data.pbat), true);
+				this.setState("soc", parseFloat(json.data.soc), true);
+				this.setState("pbat", parseFloat(json.data.pbat), true);
 
-			this.setState("ev1_power", parseFloat(json.data.ev1_power), true);
-			this.setState("ev2_power", parseFloat(json.data.ev2_power), true);
-			this.setState("ev3_power", parseFloat(json.data.ev3_power), true);
-			this.setState("ev4_power", parseFloat(json.data.ev4_power), true);
-			this.setState("ev_power_sum", parseFloat(json.data.ev1_power) + parseFloat(json.data.ev2_power) + parseFloat(json.data.ev3_power) + parseFloat(json.data.ev4_power), true);
+				this.setState("ev1_power", parseFloat(json.data.ev1_power), true);
+				this.setState("ev2_power", parseFloat(json.data.ev2_power), true);
+				this.setState("ev3_power", parseFloat(json.data.ev3_power), true);
+				this.setState("ev4_power", parseFloat(json.data.ev4_power), true);
+				this.setState("ev_power_sum", parseFloat(json.data.ev1_power) + parseFloat(json.data.ev2_power) + parseFloat(json.data.ev3_power) + parseFloat(json.data.ev4_power), true);
 
-			this.setState("home_load", parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3) + parseFloat(json.data.pbat) + parseFloat(json.data.pmeter_dc), true);
+				this.setState("home_load", parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3) + parseFloat(json.data.pbat) + parseFloat(json.data.pmeter_dc), true);
 
-			this.setState("last_updated", new Date().getTime(), true);
+				this.setState("last_updated", new Date().getTime(), true);
+			} catch (error) {
+				this.log.debug("Error while reading / parsing fetched data: " + json.data);
+			}
 		}
 		else if (result.status == 401) {
 			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
@@ -313,12 +317,17 @@ class AlphaEssCloud extends utils.Adapter {
 		if (result.status == 200)
 		{
 			const json = result.data;
-			this.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
-			this.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
-			this.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
-			this.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
 
-			this.setState("statistics_last_updated", new Date().getTime(), true);
+			try {
+				this.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
+				this.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
+				this.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
+				this.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
+
+				this.setState("statistics_last_updated", new Date().getTime(), true);
+			} catch (error) {
+				this.log.debug("Error while reading / parsing fetched data: " + json.data);
+			}
 		}
 		else if (result.status == 401) {
 			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
@@ -348,20 +357,24 @@ class AlphaEssCloud extends utils.Adapter {
 		{
 			const json = result.data;
 
-			this.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
-			this.setState("EselfSufficiencyToday", parseFloat(json.data.EselfSufficiency), true);
-			this.setState("EGrid2LoadToday", parseFloat(json.data.EGrid2Load), true);
-			this.setState("EGridChargeToday", parseFloat(json.data.EGridCharge), true);
-			this.setState("EHomeLoadToday", parseFloat(json.data.EHomeLoad), true);
-			this.setState("EbatToday", parseFloat(json.data.Ebat), true);
-			this.setState("EchargeToday", parseFloat(json.data.Echarge), true);
-			this.setState("EeffToday", parseFloat(json.data.Eeff), true);
-			this.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
-			this.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
-			this.setState("EpvTToday", parseFloat(json.data.EpvT), true);
-			this.setState("EoutToday", parseFloat(json.data.Eout), true);
+			try {
+				this.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
+				this.setState("EselfSufficiencyToday", parseFloat(json.data.EselfSufficiency), true);
+				this.setState("EGrid2LoadToday", parseFloat(json.data.EGrid2Load), true);
+				this.setState("EGridChargeToday", parseFloat(json.data.EGridCharge), true);
+				this.setState("EHomeLoadToday", parseFloat(json.data.EHomeLoad), true);
+				this.setState("EbatToday", parseFloat(json.data.Ebat), true);
+				this.setState("EchargeToday", parseFloat(json.data.Echarge), true);
+				this.setState("EeffToday", parseFloat(json.data.Eeff), true);
+				this.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
+				this.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
+				this.setState("EpvTToday", parseFloat(json.data.EpvT), true);
+				this.setState("EoutToday", parseFloat(json.data.Eout), true);
 
-			this.setState("statistics_last_updated", new Date().getTime(), true);
+				this.setState("statistics_last_updated", new Date().getTime(), true);
+			} catch (error) {
+				this.log.debug("Error while reading / parsing fetched data: " + json.data);
+			}
 		}
 		else if (result.status == 401) {
 			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
@@ -427,20 +440,24 @@ class AlphaEssCloud extends utils.Adapter {
 		{
 			const json = result.data;
 
-			this.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
-			this.setState("EselfSufficiencyAllTime", parseFloat(json.data.EselfSufficiency), true);
-			this.setState("EGrid2LoadAllTime", parseFloat(json.data.EGrid2Load), true);
-			this.setState("EGridChargeAllTime", parseFloat(json.data.EGridCharge), true);
-			this.setState("EHomeLoadAllTime", parseFloat(json.data.EHomeLoad), true);
-			this.setState("EbatAllTime", parseFloat(json.data.Ebat), true);
-			this.setState("EchargeAllTime", parseFloat(json.data.Echarge), true);
-			this.setState("EeffAllTime", parseFloat(json.data.Eeff), true);
-			this.setState("Epv2loadAllTime", parseFloat(json.data.Epv2load), true);
-			this.setState("EpvchargeAllTime", parseFloat(json.data.Epvcharge), true);
-			this.setState("EpvTAllTime", parseFloat(json.data.EpvT), true);
-			this.setState("EoutAllTime", parseFloat(json.data.Eout), true);
+			try {
+				this.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
+				this.setState("EselfSufficiencyAllTime", parseFloat(json.data.EselfSufficiency), true);
+				this.setState("EGrid2LoadAllTime", parseFloat(json.data.EGrid2Load), true);
+				this.setState("EGridChargeAllTime", parseFloat(json.data.EGridCharge), true);
+				this.setState("EHomeLoadAllTime", parseFloat(json.data.EHomeLoad), true);
+				this.setState("EbatAllTime", parseFloat(json.data.Ebat), true);
+				this.setState("EchargeAllTime", parseFloat(json.data.Echarge), true);
+				this.setState("EeffAllTime", parseFloat(json.data.Eeff), true);
+				this.setState("Epv2loadAllTime", parseFloat(json.data.Epv2load), true);
+				this.setState("EpvchargeAllTime", parseFloat(json.data.Epvcharge), true);
+				this.setState("EpvTAllTime", parseFloat(json.data.EpvT), true);
+				this.setState("EoutAllTime", parseFloat(json.data.Eout), true);
 
-			this.setState("statistics_alltime_last_updated", new Date().getTime(), true);
+				this.setState("statistics_alltime_last_updated", new Date().getTime(), true);
+			} catch (error) {
+				this.log.debug("Error while reading / parsing fetched data: " + json.data);
+			}
 		}
 		else if (result.status == 401) {
 			this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
