@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.29",
+        "version": "0.0.30",
         "news": {
+            "0.0.30": {
+                "en": "error handling",
+                "de": "fehlerbehebung",
+                "ru": "обработка ошибок",
+                "pt": "manipulação de erros",
+                "nl": "vergissing",
+                "fr": "gestion des erreurs",
+                "it": "gestione degli errori",
+                "es": "manejo de errores",
+                "pl": "obsługa błędów",
+                "uk": "обробка помилок",
+                "zh-cn": "错误处理"
+            },
             "0.0.29": {
                 "en": "Some smaller improvements",
                 "de": "Einige kleinere Verbesserungen",
@@ -243,18 +256,6 @@
                 "es": "Cálculo de la carga actual",
                 "pl": "Obliczanie aktualnego obciążenia",
                 "zh-cn": "当前负载的计算"
-            },
-            "0.0.10": {
-                "en": "New statistic values (fix for 0.0.9)",
-                "de": "Neue Statistikwerte (Fix für 0.0.9)",
-                "ru": "Новые статистические значения (исправлено для 0.0.9)",
-                "pt": "Novos valores estatísticos (correção para 0.0.9)",
-                "nl": "Nieuwe statistische waarden (fix voor 0.0.9)",
-                "fr": "Nouvelles valeurs statistiques (correction pour 0.0.9)",
-                "it": "Nuovi valori statistici (correzione per 0.0.9)",
-                "es": "Nuevos valores estadísticos (corrección para 0.0.9)",
-                "pl": "Nowe wartości statystyk (poprawka dla 0.0.9)",
-                "zh-cn": "新的统计值（修复 0.0.9）"
             }
         },
         "title": "Alpha ESS Cloud",

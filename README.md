@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.30 (2023-08-03)
 * error handling 
 
 ### 0.0.29 (2023-06-18)
