@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.30",
+        "version": "0.0.31",
         "news": {
+            "0.0.31": {
+                "en": "axios handling: accepting all http status, own response handling",
+                "de": "axios handling: akzeptieren sie alle http-status, eigene antwortbehandlung",
+                "ru": "обработка axios: принимая все http статус, собственное реагирование",
+                "pt": "manuseio de axios: aceitar todo o status http, manuseio de resposta própria",
+                "nl": "accepteer alle htp-status, eigen reactie",
+                "fr": "maniement axios: acceptant tout statut http, propre traitement de la réponse",
+                "it": "gestione assios: accettare tutto lo stato http, gestione della propria risposta",
+                "es": "axios: aceptar todo el estado http, manejo de respuesta propia",
+                "pl": "axios handling: akceptuje status http",
+                "uk": "обробка аксіосу: прийняття будь-якого стану http, обробка власної відповіді",
+                "zh-cn": "a 地址:接受所有网址地位,自行处理反应"
+            },
             "0.0.30": {
                 "en": "error handling",
                 "de": "fehlerbehebung",
@@ -244,18 +257,6 @@
                 "es": "Los intervalos de actualización ahora se pueden configurar",
                 "pl": "Można teraz skonfigurować interwały aktualizacji",
                 "zh-cn": "现在可以配置更新间隔"
-            },
-            "0.0.11": {
-                "en": "Calculation of current load",
-                "de": "Berechnung der Strombelastung",
-                "ru": "Расчет текущей нагрузки",
-                "pt": "Cálculo da carga atual",
-                "nl": "Berekening van de huidige belasting:",
-                "fr": "Calcul de la charge actuelle",
-                "it": "Calcolo del carico di corrente",
-                "es": "Cálculo de la carga actual",
-                "pl": "Obliczanie aktualnego obciążenia",
-                "zh-cn": "当前负载的计算"
             }
         },
         "title": "Alpha ESS Cloud",
