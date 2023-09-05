@@ -305,6 +305,7 @@ class AlphaEssCloud extends utils.Adapter {
 		const url = `https://cloud.alphaess.com/api/ESS/SticsSummeryDataForCustomer?noLoading=true&showLoading=false&sys_sn=${this.config.system}&tday=${today}`;
 
 		const config = {
+			validateStatus: () => true,
 			headers: this.GetHeaders({
 				"Authorization":"Bearer " + this.authToken,
 			})
@@ -344,6 +345,7 @@ class AlphaEssCloud extends utils.Adapter {
 		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${todayDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
 
 		const config = {
+			validateStatus: () => true,
 			headers: this.GetHeaders({
 				"Authorization":"Bearer " + this.authToken,
 			})
@@ -390,6 +392,7 @@ class AlphaEssCloud extends utils.Adapter {
 		const url = `https://cloud.alphaess.com/api/Account/GetCustomMenuESSlist`;
 
 		const config = {
+			validateStatus: () => true,
 			headers: this.GetHeaders({
 				"Authorization":"Bearer " + this.authToken,
 			})
@@ -427,6 +430,7 @@ class AlphaEssCloud extends utils.Adapter {
 		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${beginDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
 
 		const config = {
+			validateStatus: () => true,
 			headers: this.GetHeaders({
 				"Authorization":"Bearer " + this.authToken,
 			})
@@ -525,6 +529,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"password": this.config.password
 		};
 		const config = {
+			validateStatus: () => true,
 			headers: instance.GetHeaders()
 		};
 
