@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.31",
+        "version": "0.0.32",
         "news": {
+            "0.0.32": {
+                "en": "axios handling: accepting all http status, own response handling: one missing spot",
+                "de": "axios handling: akzeptieren aller http-status, eigene antwortbehandlung: ein fehlender spot",
+                "ru": "обработка axios: принятие всех http статуса, собственный реагирование обработки: один отсутствует место",
+                "pt": "manuseio de axios: aceitar todo o status http, manuseio de resposta própria: um ponto faltando",
+                "nl": "accepteer alle htp-status, eigen reactie, een vermiste plek",
+                "fr": "maniement axios: acceptant tout statut http, propre traitement de la réponse: un spot manquant",
+                "it": "gestione assios: accettare tutto lo stato http, gestione della propria risposta: un punto mancante",
+                "es": "axios: aceptar todo el estado http, manejo de la respuesta propia: un punto perdido",
+                "pl": "axios handling: akceptuje status http, własną obsługę odpowiedzi: jeden brak miejsca",
+                "uk": "обробка аксіосу: приймає весь статус http, власний контроль відповідей: один відсутній місце",
+                "zh-cn": "a 地址:接受所有网站地位,自行处理:一个失踪地点"
+            },
             "0.0.31": {
                 "en": "axios handling: accepting all http status, own response handling",
                 "de": "axios handling: akzeptieren sie alle http-status, eigene antwortbehandlung",
@@ -245,18 +258,6 @@
                 "es": "Cambio de URL de Alpha Cloud en https://cloud.alphaess.com",
                 "pl": "Changed URL of Alpha Cloud to https:/cloudess.com (ang.)",
                 "zh-cn": "改变Alpha Cloud URL to http://cloud.alphaess.com"
-            },
-            "0.0.12": {
-                "en": "Update intervals can now be configured",
-                "de": "Aktualisierungsintervalle können jetzt konfiguriert werden",
-                "ru": "Интервалы обновления теперь можно настроить",
-                "pt": "Os intervalos de atualização agora podem ser configurados",
-                "nl": "Update-intervallen kunnen nu worden geconfigureerd",
-                "fr": "Les intervalles de mise à jour peuvent maintenant être configurés",
-                "it": "È ora possibile configurare gli intervalli di aggiornamento",
-                "es": "Los intervalos de actualización ahora se pueden configurar",
-                "pl": "Można teraz skonfigurować interwały aktualizacji",
-                "zh-cn": "现在可以配置更新间隔"
             }
         },
         "title": "Alpha ESS Cloud",

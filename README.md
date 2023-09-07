@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.32 (2023-09-07)
 * axios handling: accepting all http status, own response handling: one missing spot
 
 ### 0.0.31 (2023-09-05)
