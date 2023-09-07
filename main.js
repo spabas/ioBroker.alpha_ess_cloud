@@ -242,6 +242,7 @@ class AlphaEssCloud extends utils.Adapter {
 		const url = `https://cloud.alphaess.com/api/ESS/GetLastPowerDataBySN?noLoading=true&sys_sn=${this.config.system}`;
 		const config = {
 			headers: this.GetHeaders({
+				validateStatus: () => true,
 				"Authorization":"Bearer " + this.authToken,
 			})
 		};
