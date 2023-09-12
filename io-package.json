@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.32",
+        "version": "0.0.33",
         "news": {
+            "0.0.33": {
+                "en": "axios error handling",
+                "de": "axios fehlerbehandlung",
+                "ru": "axios ошибка обработки",
+                "pt": "manipulação de erro axios",
+                "nl": "axios fout",
+                "fr": "axios erreur handling",
+                "it": "gestione degli errori",
+                "es": "manejo de errores axios",
+                "pl": "uchylenie błędów",
+                "uk": "обробка помилок axios",
+                "zh-cn": "a 处理错误"
+            },
             "0.0.32": {
                 "en": "axios handling: accepting all http status, own response handling: one missing spot",
                 "de": "axios handling: akzeptieren aller http-status, eigene antwortbehandlung: ein fehlender spot",
@@ -246,18 +259,6 @@
                 "es": "Estadísticas de todo el tiempo",
                 "pl": "All Time Statistics (ang.)",
                 "zh-cn": "所有制度统计"
-            },
-            "0.0.13": {
-                "en": "Changed URL of Alpha Cloud to https://cloud.alphaess.com",
-                "de": "Änderung der URL von Alpha Cloud auf https://cloud.alphaess.com",
-                "ru": "Измененный URL Alpha Cloud на https://cloud.alphaess.com",
-                "pt": "URL alterada da Alpha Cloud para https://cloud.alphaess.com",
-                "nl": "Veranderde URL van Alpha Cloud tot htps:",
-                "fr": "URL modifiée de Alpha Cloud à https://cloud.alphaess.com",
-                "it": "URL modificato di Alpha Cloud a https://cloud.alphaess.com",
-                "es": "Cambio de URL de Alpha Cloud en https://cloud.alphaess.com",
-                "pl": "Changed URL of Alpha Cloud to https:/cloudess.com (ang.)",
-                "zh-cn": "改变Alpha Cloud URL to http://cloud.alphaess.com"
             }
         },
         "title": "Alpha ESS Cloud",
