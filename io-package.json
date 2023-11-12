@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.35",
+        "version": "0.0.36",
         "news": {
+            "0.0.36": {
+                "en": "correcting and add properties of new API",
+                "de": "eigenschaften der neuen API korrigieren und hinzufügen",
+                "ru": "исправление и добавление свойств нового API",
+                "pt": "corrigir e adicionar propriedades de nova API",
+                "nl": "vertaling:",
+                "fr": "corriger et ajouter des propriétés de nouvelle API",
+                "it": "correggere e aggiungere proprietà della nuova API",
+                "es": "corregir y añadir propiedades de nueva API",
+                "pl": "poprawienie i dodanie własności nowych interfejsów API",
+                "uk": "виправлення та додавання властивостей нового API",
+                "zh-cn": "b. 纠正和增加新生动植物群的财产"
+            },
             "0.0.35": {
                 "en": "correcting and add properties of new API",
                 "de": "eigenschaften der neuen API korrigieren und hinzufügen",
@@ -249,18 +262,6 @@
                 "pl": "AuthToken jako konfiguracja, jeśli logina nie działa",
                 "uk": "AuthToken як налаштування для резервного копіювання, якщо логін не працює",
                 "zh-cn": "如果伐木业,作为后盾"
-            },
-            "0.0.16": {
-                "en": "Missing object",
-                "de": "Fehlendes Objekt",
-                "ru": "Отсутствие объекта",
-                "pt": "Objeto perdido",
-                "nl": "Vermist object",
-                "fr": "Objet manquant",
-                "it": "Oggetto mancante",
-                "es": "Objeto perdido",
-                "pl": "Obiekty",
-                "zh-cn": "宣布反对"
             }
         },
         "title": "Alpha ESS Cloud",
