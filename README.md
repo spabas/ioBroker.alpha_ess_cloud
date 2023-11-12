@@ -21,7 +21,7 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 0.0.38 (2023-11-12)
 * correcting and add properties of new API
 
 ### 0.0.37 (2023-11-12)
