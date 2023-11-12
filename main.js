@@ -60,7 +60,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"pmeter_dc", "soc", "pbat",
 			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum", "home_load",
 			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
-			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday",
+			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday", "EinputToday", "EloadToday",
 			"EselfConsumptionAllTime", "EselfSufficiencyAllTime", "EGrid2LoadAllTime", "EGridChargeAllTime", "EHomeLoadAllTime", "EbatAllTime", "EchargeAllTime", "EeffAllTime", "Epv2loadAllTime", "EpvchargeAllTime", "EpvTAllTime", "EoutAllTime",
 			"popv", "poinv"
 		];
@@ -80,7 +80,7 @@ class AlphaEssCloud extends utils.Adapter {
 		}
 
 		const deviceStates = [
-			"sys_sn", "mbat", "minv", "ems_status"
+			"systemId", "sys_sn", "mbat", "minv", "ems_status"
 		];
 
 		for (let i = 0; i < deviceStates.length; i++) {
@@ -380,6 +380,8 @@ class AlphaEssCloud extends utils.Adapter {
 					this.setState("EpvchargeToday", parseFloat(json.data.epvcharge), true);
 					this.setState("EpvTToday", parseFloat(json.data.epvT), true);
 					this.setState("EoutToday", parseFloat(json.data.eout), true);
+					this.setState("EinputToday", parseFloat(json.data.einput), true);
+					this.setState("EloadToday", parseFloat(json.data.eload), true);
 
 					this.setState("statistics_last_updated", new Date().getTime(), true);
 				} catch (error) {
@@ -419,7 +421,8 @@ class AlphaEssCloud extends utils.Adapter {
 				const json = result.data;
 
 				const data = json.data[0];
-				this.setState("sys_sn", data.sys_sn, true);
+				this.setState("sys_sn", data.sysSn, true);
+				this.setState("systemId", data.systemId, true);
 				this.setState("popv", data.popv, true);
 				this.setState("poinv", data.poinv, true);
 				this.setState("mbat", data.mbat, true);
