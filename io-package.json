@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.36",
+        "version": "0.0.37",
         "news": {
+            "0.0.37": {
+                "en": "correcting and add properties of new API",
+                "de": "eigenschaften der neuen API korrigieren und hinzufügen",
+                "ru": "исправление и добавление свойств нового API",
+                "pt": "corrigir e adicionar propriedades de nova API",
+                "nl": "vertaling:",
+                "fr": "corriger et ajouter des propriétés de nouvelle API",
+                "it": "correggere e aggiungere proprietà della nuova API",
+                "es": "corregir y añadir propiedades de nueva API",
+                "pl": "poprawienie i dodanie własności nowych interfejsów API",
+                "uk": "виправлення та додавання властивостей нового API",
+                "zh-cn": "b. 纠正和增加新生动植物群的财产"
+            },
             "0.0.36": {
                 "en": "correcting and add properties of new API",
                 "de": "eigenschaften der neuen API korrigieren und hinzufügen",
@@ -238,19 +251,6 @@
                 "zh-cn": "自2022-10-16年以来需要的尊严"
             },
             "0.0.18": {
-                "en": "AuthToken as config for backup if login doesn't work",
-                "de": "AuthToken als config für Backup, wenn Login nicht funktioniert",
-                "ru": "AuthToken как config для резервного копирования, если логин не работает",
-                "pt": "AuthToken como configuração para backup se o login não funcionar",
-                "nl": "AuthToken als config voor back-up als login niet werkt",
-                "fr": "AuthToken comme configuration de sauvegarde si login ne fonctionne pas",
-                "it": "AuthToken come configurazione per il backup se il login non funziona",
-                "es": "AuthToken como configuración para la copia de seguridad si el login no funciona",
-                "pl": "AuthToken jako konfiguracja, jeśli logina nie działa",
-                "uk": "AuthToken як налаштування для резервного копіювання, якщо логін не працює",
-                "zh-cn": "如果伐木业,作为后盾"
-            },
-            "0.0.17": {
                 "en": "AuthToken as config for backup if login doesn't work",
                 "de": "AuthToken als config für Backup, wenn Login nicht funktioniert",
                 "ru": "AuthToken как config для резервного копирования, если логин не работает",
