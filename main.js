@@ -10,6 +10,9 @@ const utils = require("@iobroker/adapter-core");
 //const request = require("request");
 const axios = require("axios").default;
 
+//const crypto = require("crypto");
+const CryptoJS = require("crypto-js");
+
 // Load your modules here, e.g.:
 // const fs = require("fs");
 
@@ -155,14 +158,6 @@ class AlphaEssCloud extends utils.Adapter {
 			native: {},
 		});
 
-		const signatatureKeyState = await this.getStateAsync("x_signature_key");
-		if (signatatureKeyState !== undefined && signatatureKeyState !== null)
-			this.signatureKey = `${signatatureKeyState.val}`;
-		else
-			this.signatureKey = "LS885ZYDA95JVFQKUIUUUV7PQNODZRDZIS4ERREDS0EED8BCWSS";
-
-		this.log.info("using signature key: " + this.signatureKey);
-
 		const instance = this;
 
 		try {
@@ -239,11 +234,11 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	async getPowerData() {
-		const url = `https://cloud.alphaess.com/api/ESS/GetLastPowerDataBySN?noLoading=true&sys_sn=${this.config.system}`;
+		const url = `https://cloud.alphaess.com/api/base/energyStorage/getLastPowerData?sysSn=${this.config.system}`;
 		const config = {
 			headers: this.GetHeaders({
 				validateStatus: () => true,
-				"Authorization":"Bearer " + this.authToken,
+				"Authorization": this.authToken,
 			})
 		};
 
@@ -257,35 +252,38 @@ class AlphaEssCloud extends utils.Adapter {
 				const json = result.data;
 
 				try {
-					this.setState("ppv1", parseFloat(json.data.ppv1), true);
-					this.setState("ppv2", parseFloat(json.data.ppv2), true);
-					this.setState("ppv3", parseFloat(json.data.ppv3), true);
-					this.setState("ppv4", parseFloat(json.data.ppv4), true);
-					this.setState("ppv_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4), true);
+					// this.setState("ppv1", parseFloat(json.data.ppv1), true);
+					// this.setState("ppv2", parseFloat(json.data.ppv2), true);
+					// this.setState("ppv3", parseFloat(json.data.ppv3), true);
+					// this.setState("ppv4", parseFloat(json.data.ppv4), true);
+					this.setState("ppv_sum",  parseFloat(json.data.ppv), true);
 
-					this.setState("ppv_and_dc_sum",  parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_dc), true);
+					this.setState("ppv_and_dc_sum",  parseFloat(json.data.ppv) +  parseFloat(json.data.ppvSlave), true);
 
-					this.setState("preal_l1", parseFloat(json.data.preal_l1), true);
-					this.setState("preal_l2", parseFloat(json.data.preal_l2), true);
-					this.setState("preal_l3", parseFloat(json.data.preal_l3), true);
-					this.setState("preal_sum", parseFloat(json.data.preal_l1) + parseFloat(json.data.preal_l2) + parseFloat(json.data.preal_l3), true);
+					// this.setState("preal_l1", parseFloat(json.data.preal_l1), true);
+					// this.setState("preal_l2", parseFloat(json.data.preal_l2), true);
+					// this.setState("preal_l3", parseFloat(json.data.preal_l3), true);
+					// this.setState("preal_sum", parseFloat(json.data.preal_l1) + parseFloat(json.data.preal_l2) + parseFloat(json.data.preal_l3), true);
 
-					this.setState("pmeter_l1", parseFloat(json.data.pmeter_l1), true);
-					this.setState("pmeter_l2", parseFloat(json.data.pmeter_l2), true);
-					this.setState("pmeter_l3", parseFloat(json.data.pmeter_l3), true);
-					this.setState("pmeter_sum", parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3), true);
-					this.setState("pmeter_dc", parseFloat(json.data.pmeter_dc), true);
+					//Netz
+					// this.setState("pmeter_l1", parseFloat(json.data.pmeter_l1), true);
+					// this.setState("pmeter_l2", parseFloat(json.data.pmeter_l2), true);
+					// this.setState("pmeter_l3", parseFloat(json.data.pmeter_l3), true);
+					this.setState("pmeter_sum", parseFloat(json.data.pgrid), true);
+
+					this.setState("pmeter_dc", parseFloat(json.data.ppvSlave), true);
 
 					this.setState("soc", parseFloat(json.data.soc), true);
 					this.setState("pbat", parseFloat(json.data.pbat), true);
 
-					this.setState("ev1_power", parseFloat(json.data.ev1_power), true);
-					this.setState("ev2_power", parseFloat(json.data.ev2_power), true);
-					this.setState("ev3_power", parseFloat(json.data.ev3_power), true);
-					this.setState("ev4_power", parseFloat(json.data.ev4_power), true);
-					this.setState("ev_power_sum", parseFloat(json.data.ev1_power) + parseFloat(json.data.ev2_power) + parseFloat(json.data.ev3_power) + parseFloat(json.data.ev4_power), true);
+					// this.setState("ev1_power", parseFloat(json.data.ev1_power), true);
+					// this.setState("ev2_power", parseFloat(json.data.ev2_power), true);
+					// this.setState("ev3_power", parseFloat(json.data.ev3_power), true);
+					// this.setState("ev4_power", parseFloat(json.data.ev4_power), true);
+					this.setState("ev_power_sum", parseFloat(json.data.pev), true);
 
-					this.setState("home_load", parseFloat(json.data.ppv1) +  parseFloat(json.data.ppv2) +  parseFloat(json.data.ppv3) + parseFloat(json.data.ppv4) + parseFloat(json.data.pmeter_l1) + parseFloat(json.data.pmeter_l2) + parseFloat(json.data.pmeter_l3) + parseFloat(json.data.pbat) + parseFloat(json.data.pmeter_dc), true);
+					//Verbrauch
+					this.setState("home_load", parseFloat(json.data.pload), true);
 
 					this.setState("last_updated", new Date().getTime(), true);
 				} catch (error) {
@@ -307,12 +305,12 @@ class AlphaEssCloud extends utils.Adapter {
 
 	async getSummaryStatisticsData() {
 		const today = new Date().toLocaleDateString("en-CA");
-		const url = `https://cloud.alphaess.com/api/ESS/SticsSummeryDataForCustomer?noLoading=true&showLoading=false&sys_sn=${this.config.system}&tday=${today}`;
+		const url = `https://cloud.alphaess.com/api/web/home/getSumDataForCustomer?sn=${this.config.system}&tday=${today}`;
 
 		const config = {
 			validateStatus: () => true,
 			headers: this.GetHeaders({
-				"Authorization":"Bearer " + this.authToken,
+				"Authorization": this.authToken,
 			})
 		};
 
@@ -326,10 +324,10 @@ class AlphaEssCloud extends utils.Adapter {
 				const json = result.data;
 
 				try {
-					this.setState("EselfConsumption", parseFloat(json.data.EselfConsumption), true);
-					this.setState("EselfSufficiency", parseFloat(json.data.EselfSufficiency), true);
-					this.setState("Epvtotal", parseFloat(json.data.Epvtotal), true);
-					this.setState("Epvtoday", parseFloat(json.data.Epvtoday), true);
+					this.setState("EselfConsumption", parseFloat(json.data.eselfConsumption), true);
+					this.setState("EselfSufficiency", parseFloat(json.data.eselfSufficiency), true);
+					this.setState("Epvtotal", parseFloat(json.data.epvtotal), true);
+					this.setState("Epvtoday", parseFloat(json.data.epvtoday), true);
 
 					this.setState("statistics_last_updated", new Date().getTime(), true);
 				} catch (error) {
@@ -351,12 +349,12 @@ class AlphaEssCloud extends utils.Adapter {
 
 	async getPeriodStatisticsData() {
 		const todayDate = new Date().toLocaleDateString("en-CA");
-		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${todayDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
+		const url = `https://cloud.alphaess.com/api/base/energy/getEnergyStatistics?beginDate=${todayDate}&endDate=${todayDate}&sysSn=${this.config.system}`;
 
 		const config = {
 			validateStatus: () => true,
 			headers: this.GetHeaders({
-				"Authorization":"Bearer " + this.authToken,
+				"Authorization": this.authToken,
 			})
 		};
 
@@ -370,18 +368,18 @@ class AlphaEssCloud extends utils.Adapter {
 				const json = result.data;
 
 				try {
-					this.setState("EselfConsumptionToday", parseFloat(json.data.EselfConsumption), true);
-					this.setState("EselfSufficiencyToday", parseFloat(json.data.EselfSufficiency), true);
-					this.setState("EGrid2LoadToday", parseFloat(json.data.EGrid2Load), true);
-					this.setState("EGridChargeToday", parseFloat(json.data.EGridCharge), true);
-					this.setState("EHomeLoadToday", parseFloat(json.data.EHomeLoad), true);
-					this.setState("EbatToday", parseFloat(json.data.Ebat), true);
-					this.setState("EchargeToday", parseFloat(json.data.Echarge), true);
-					this.setState("EeffToday", parseFloat(json.data.Eeff), true);
-					this.setState("Epv2loadToday", parseFloat(json.data.Epv2load), true);
-					this.setState("EpvchargeToday", parseFloat(json.data.Epvcharge), true);
-					this.setState("EpvTToday", parseFloat(json.data.EpvT), true);
-					this.setState("EoutToday", parseFloat(json.data.Eout), true);
+					this.setState("EselfConsumptionToday", parseFloat(json.data.eselfConsumption), true);
+					this.setState("EselfSufficiencyToday", parseFloat(json.data.eselfSufficiency), true);
+					this.setState("EGrid2LoadToday", parseFloat(json.data.eGrid2Load), true);
+					this.setState("EGridChargeToday", parseFloat(json.data.eGridCharge), true);
+					this.setState("EHomeLoadToday", parseFloat(json.data.eHomeLoad), true);
+					this.setState("EbatToday", parseFloat(json.data.ebat), true);
+					this.setState("EchargeToday", parseFloat(json.data.echarge), true);
+					this.setState("EeffToday", parseFloat(json.data.eeff), true);
+					this.setState("Epv2loadToday", parseFloat(json.data.epv2load), true);
+					this.setState("EpvchargeToday", parseFloat(json.data.epvcharge), true);
+					this.setState("EpvTToday", parseFloat(json.data.epvT), true);
+					this.setState("EoutToday", parseFloat(json.data.eout), true);
 
 					this.setState("statistics_last_updated", new Date().getTime(), true);
 				} catch (error) {
@@ -402,12 +400,12 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	async getDeviceData() {
-		const url = `https://cloud.alphaess.com/api/Account/GetCustomMenuESSlist`;
+		const url = `https://cloud.alphaess.com/api/web/home/getCustomMenuEssList?pageSize=10000&pageIndex=1`;
 
 		const config = {
 			validateStatus: () => true,
 			headers: this.GetHeaders({
-				"Authorization":"Bearer " + this.authToken,
+				"Authorization": this.authToken,
 			})
 		};
 
@@ -449,7 +447,7 @@ class AlphaEssCloud extends utils.Adapter {
 		const config = {
 			validateStatus: () => true,
 			headers: this.GetHeaders({
-				"Authorization":"Bearer " + this.authToken,
+				"Authorization": this.authToken,
 			})
 		};
 
@@ -494,60 +492,27 @@ class AlphaEssCloud extends utils.Adapter {
 		}
 	}
 
+	encryptPassword(password, username) {
 
-	// GetSignatureKey(callback = () => {}) {
-	// 	const url = "https://cloud.alphaess.com/";
-	// 	const instance = this;
+		const aeskey = CryptoJS.SHA256(username);
+		const iv = CryptoJS.MD5(username);
+		const encrypted = CryptoJS.AES.encrypt(password, aeskey, {
+			iv: iv,
+			mode: CryptoJS.mode.CBC,
+			padding: CryptoJS.pad.Pkcs7,
+		});
 
-	// 	const APP_SRC = /<script src=(\/static\/js\/app\..*?\.js\?.*?)>/gis;
-	// 	const APP_KEY = /"(LS.*?CWSS)"/gis;
-
-	// 	this.log.info("Getting signature key from website: " + url);
-	// 	request({url: url, method: "GET" }, function(error, response, body) {
-	// 		if (!error && response.statusCode == 200) {
-
-	// 			const jsRegex = APP_SRC.exec(body);
-	// 			if (!jsRegex || jsRegex.length < 2) {
-	// 				throw "We got an unexpected body while getting application script source.";
-	// 			}
-
-	// 			const scriptFile = jsRegex[1];
-	// 			instance.log.info("We got the following application script source: " + scriptFile);
-
-	// 			request({url: url + scriptFile, method: "GET" }, function(error, response, body) {
-	// 				if (!error && response.statusCode == 200) {
-
-	// 					const keyRegex = APP_KEY.exec(body);
-	// 					if (!keyRegex || keyRegex.length < 2) {
-	// 						throw "We got an unexpected body while getting signature key.";
-	// 					}
-
-	// 					instance.signatureKey = keyRegex[1];
-	// 					instance.log.info("We got the following signature key: " + instance.signatureKey);
-	// 					instance.setState("x_signature_key", instance.signatureKey, true);
-
-	// 					if (callback)
-	// 						callback();
-
-	// 					return;
-	// 				}
-	// 				else {
-	// 					instance.log.error("Error while getting signature key: " + response.statusCode + " - " + error);
-	// 				}
-	// 			});
-	// 		}
-	// 		else {
-	// 			instance.log.error("Error while getting application script source: " + response.statusCode + " - " + error);
-	// 		}
-	// 	});
-	// }
+		return encrypted.toString();
+	}
 
 	async Login() {
 		const instance = this;
-		const url = "https://cloud.alphaess.com/api/Account/Login";
+		const url = "https://cloud.alphaess.com/api/base/user/login";
+		const encryptedPassword = this.encryptPassword(this.config.password, this.config.username);
+
 		const body = {
 			"username": this.config.username,
-			"password": this.config.password
+			"password": encryptedPassword
 		};
 		const config = {
 			validateStatus: () => true,
@@ -561,7 +526,7 @@ class AlphaEssCloud extends utils.Adapter {
 
 			if (result.status == 200) {
 				const payload = result.data;
-				const authToken = payload.data.AccessToken;
+				const authToken = payload.data.token;
 
 				if (authToken)
 				{
@@ -584,21 +549,14 @@ class AlphaEssCloud extends utils.Adapter {
 		}
 	}
 
-	GetHeaders(additionalHeaders) {
-		const crypto = require("crypto");
 
+	GetHeaders(additionalHeaders) {
 		const headers = {
 			"Content-Type":"application/json",
 			"Connection": "keep-alive",
 			"Accept": "*/*",
 			"Cache-Control": "no-cache",
-			"AuthTimestamp": parseInt("" + (new Date).getTime() / 1e3),
-			"AuthSignature": ""
 		};
-
-		const data = this.signatureKey + headers.AuthTimestamp;
-		const hash = crypto.createHash("sha512").update(data).digest("hex");
-		headers.AuthSignature = "al8e4s" + hash + "ui893ed";
 
 		return Object.assign({}, headers, additionalHeaders);
 	}

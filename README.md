@@ -21,6 +21,9 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* breaking change Alpha API
+
 ### 0.0.33 (2023-09-12)
 * axios error handling
 
