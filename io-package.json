@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.34",
+        "version": "0.0.35",
         "news": {
+            "0.0.35": {
+                "en": "correcting and add properties of new API",
+                "de": "eigenschaften der neuen API korrigieren und hinzufügen",
+                "ru": "исправление и добавление свойств нового API",
+                "pt": "corrigir e adicionar propriedades de nova API",
+                "nl": "vertaling:",
+                "fr": "corriger et ajouter des propriétés de nouvelle API",
+                "it": "correggere e aggiungere proprietà della nuova API",
+                "es": "corregir y añadir propiedades de nueva API",
+                "pl": "poprawienie i dodanie własności nowych interfejsów API",
+                "uk": "виправлення та додавання властивостей нового API",
+                "zh-cn": "b. 纠正和增加新生动植物群的财产"
+            },
             "0.0.34": {
                 "en": "breaking change Alpha API",
                 "de": "änderung Alpha API",
@@ -248,18 +261,6 @@
                 "es": "Objeto perdido",
                 "pl": "Obiekty",
                 "zh-cn": "宣布反对"
-            },
-            "0.0.15": {
-                "en": "Using external intervert information in ppv sum and consumption",
-                "de": "Verwendung externer Intervert-Informationen in ppv Summe und Verbrauch",
-                "ru": "Использование внешней информации в ppv и потреблении",
-                "pt": "Usando informações intervert externas na soma ppv e consumo",
-                "nl": "Gebruikt externe informatie in ppv sum en consumptie",
-                "fr": "Utilisation d'informations intervert externes dans ppv sum et consommation",
-                "it": "Utilizzo di informazioni intervertenze esterne in somma e consumo ppv",
-                "es": "Utilizando información externa intervert en la suma y consumo de ppv",
-                "pl": "Wykorzystując zewnętrzne informacje zawarte w sv sum i konsumpcji",
-                "zh-cn": "在ppvum和消费中使用外部避免信息"
             }
         },
         "title": "Alpha ESS Cloud",
