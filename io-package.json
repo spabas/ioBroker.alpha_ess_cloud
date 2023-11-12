@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.33",
+        "version": "0.0.34",
         "news": {
+            "0.0.34": {
+                "en": "breaking change Alpha API",
+                "de": "änderung Alpha API",
+                "ru": "сломать изменение Альфа API",
+                "pt": "mudança de ruptura API alfa",
+                "nl": "verandering Alpha API",
+                "fr": "changement de rupture Alpha API",
+                "it": "cambiamento di rottura API Alpha",
+                "es": "cambio Alpha API",
+                "pl": "zmiana Alpha API",
+                "uk": "зміна розриву Статус на сервери",
+                "zh-cn": "打破变化 Alpha API"
+            },
             "0.0.33": {
                 "en": "axios error handling",
                 "de": "axios fehlerbehandlung",
@@ -247,18 +260,6 @@
                 "es": "Utilizando información externa intervert en la suma y consumo de ppv",
                 "pl": "Wykorzystując zewnętrzne informacje zawarte w sv sum i konsumpcji",
                 "zh-cn": "在ppvum和消费中使用外部避免信息"
-            },
-            "0.0.14": {
-                "en": "AllTime Statistics",
-                "de": "AllTime Statistik",
-                "ru": "Статистика AllTime",
-                "pt": "Estatísticas a tempo inteiro",
-                "nl": "AllTime Statistieken",
-                "fr": "Statistiques de l ' heure",
-                "it": "Statistiche del tempo",
-                "es": "Estadísticas de todo el tiempo",
-                "pl": "All Time Statistics (ang.)",
-                "zh-cn": "所有制度统计"
             }
         },
         "title": "Alpha ESS Cloud",
