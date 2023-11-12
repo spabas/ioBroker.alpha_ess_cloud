@@ -60,7 +60,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"pmeter_dc", "soc", "pbat",
 			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum", "home_load",
 			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
-			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday", "EinputToday", "EloadToday",
+			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday", "EinputToday", "EloadToday", "EloadPercentageToday",
 			"EselfConsumptionAllTime", "EselfSufficiencyAllTime", "EGrid2LoadAllTime", "EGridChargeAllTime", "EHomeLoadAllTime", "EbatAllTime", "EchargeAllTime", "EeffAllTime", "Epv2loadAllTime", "EpvchargeAllTime", "EpvTAllTime", "EoutAllTime",
 			"popv", "poinv"
 		];
@@ -368,20 +368,21 @@ class AlphaEssCloud extends utils.Adapter {
 				const json = result.data;
 
 				try {
-					this.setState("EselfConsumptionToday", parseFloat(json.data.eselfConsumption), true);
-					this.setState("EselfSufficiencyToday", parseFloat(json.data.eselfSufficiency), true);
-					this.setState("EGrid2LoadToday", parseFloat(json.data.eGrid2Load), true);
-					this.setState("EGridChargeToday", parseFloat(json.data.eGridCharge), true);
-					this.setState("EHomeLoadToday", parseFloat(json.data.eHomeLoad), true);
-					this.setState("EbatToday", parseFloat(json.data.ebat), true);
-					this.setState("EchargeToday", parseFloat(json.data.echarge), true);
-					this.setState("EeffToday", parseFloat(json.data.eeff), true);
-					this.setState("Epv2loadToday", parseFloat(json.data.epv2load), true);
-					this.setState("EpvchargeToday", parseFloat(json.data.epvcharge), true);
-					this.setState("EpvTToday", parseFloat(json.data.epvT), true);
-					this.setState("EoutToday", parseFloat(json.data.eout), true);
-					this.setState("EinputToday", parseFloat(json.data.einput), true);
-					this.setState("EloadToday", parseFloat(json.data.eload), true);
+					this.setState("EselfConsumptionToday", parseFloat(json.data.eselfConsumption), true); //ok
+					this.setState("EselfSufficiencyToday", parseFloat(json.data.eselfSufficiency), true); //ok
+					this.setState("EGrid2LoadToday", parseFloat(json.data.egrid2Load), true); //ok
+					this.setState("EGridChargeToday", parseFloat(json.data.egridCharge), true); //ok
+					this.setState("EHomeLoadToday", parseFloat(json.data.ehomeLoad), true); //ok
+					this.setState("EbatToday", parseFloat(json.data.ebat), true); //ok
+					this.setState("EchargeToday", parseFloat(json.data.echarge), true); //ok
+					this.setState("EeffToday", parseFloat(json.data.eeff), true); //ok
+					this.setState("Epv2loadToday", parseFloat(json.data.epv2load), true); //ok
+					this.setState("EpvchargeToday", parseFloat(json.data.epvcharge), true); //ok
+					this.setState("EpvTToday", parseFloat(json.data.epvT), true); //ok
+					this.setState("EoutToday", parseFloat(json.data.eout), true); //ok
+					this.setState("EinputToday", parseFloat(json.data.einput), true); //ok
+					this.setState("EloadToday", parseFloat(json.data.eload), true); //ok
+					this.setState("EloadPercentageToday", parseFloat(json.data.eloadPercentage), true); //ok
 
 					this.setState("statistics_last_updated", new Date().getTime(), true);
 				} catch (error) {
@@ -464,18 +465,18 @@ class AlphaEssCloud extends utils.Adapter {
 				const json = result.data;
 
 				try {
-					this.setState("EselfConsumptionAllTime", parseFloat(json.data.EselfConsumption), true);
-					this.setState("EselfSufficiencyAllTime", parseFloat(json.data.EselfSufficiency), true);
-					this.setState("EGrid2LoadAllTime", parseFloat(json.data.EGrid2Load), true);
-					this.setState("EGridChargeAllTime", parseFloat(json.data.EGridCharge), true);
-					this.setState("EHomeLoadAllTime", parseFloat(json.data.EHomeLoad), true);
-					this.setState("EbatAllTime", parseFloat(json.data.Ebat), true);
-					this.setState("EchargeAllTime", parseFloat(json.data.Echarge), true);
-					this.setState("EeffAllTime", parseFloat(json.data.Eeff), true);
-					this.setState("Epv2loadAllTime", parseFloat(json.data.Epv2load), true);
-					this.setState("EpvchargeAllTime", parseFloat(json.data.Epvcharge), true);
-					this.setState("EpvTAllTime", parseFloat(json.data.EpvT), true);
-					this.setState("EoutAllTime", parseFloat(json.data.Eout), true);
+					this.setState("EselfConsumptionAllTime", parseFloat(json.data.eselfConsumption), true);
+					this.setState("EselfSufficiencyAllTime", parseFloat(json.data.eselfSufficiency), true);
+					this.setState("EGrid2LoadAllTime", parseFloat(json.data.egrid2Load), true);
+					this.setState("EGridChargeAllTime", parseFloat(json.data.egridCharge), true);
+					this.setState("EHomeLoadAllTime", parseFloat(json.data.ehomeLoad), true);
+					this.setState("EbatAllTime", parseFloat(json.data.ebat), true);
+					this.setState("EchargeAllTime", parseFloat(json.data.echarge), true);
+					this.setState("EeffAllTime", parseFloat(json.data.eeff), true);
+					this.setState("Epv2loadAllTime", parseFloat(json.data.epv2load), true);
+					this.setState("EpvchargeAllTime", parseFloat(json.data.epvcharge), true);
+					this.setState("EpvTAllTime", parseFloat(json.data.epvT), true);
+					this.setState("EoutAllTime", parseFloat(json.data.eout), true);
 
 					this.setState("statistics_alltime_last_updated", new Date().getTime(), true);
 				} catch (error) {
