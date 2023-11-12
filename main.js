@@ -427,7 +427,7 @@ class AlphaEssCloud extends utils.Adapter {
 				this.setState("poinv", data.poinv, true);
 				this.setState("mbat", data.mbat, true);
 				this.setState("minv", data.minv, true);
-				this.setState("ems_status", data.ems_status, true);
+				this.setState("ems_status", data.emsStatus, true);
 			}
 			else if (result.status == 401) {
 				this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
