@@ -59,7 +59,7 @@ class AlphaEssCloud extends utils.Adapter {
 			"pmeter_l1", "pmeter_l2", "pmeter_l3", "pmeter_sum",
 			"pmeter_dc", "soc", "pbat",
 			"ev1_power", "ev2_power", "ev3_power", "ev4_power", "ev_power_sum", "home_load",
-			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday",
+			"EselfConsumption", "EselfSufficiency", "Epvtotal", "Epvtoday", "Echarge", "Edischarge", "TotalIncome", "TotalTreeNumber", "TotalCarbon",
 			"EselfConsumptionToday", "EselfSufficiencyToday", "EGrid2LoadToday", "EGridChargeToday", "EHomeLoadToday", "EbatToday", "EchargeToday", "EeffToday", "Epv2loadToday", "EpvchargeToday", "EpvTToday", "EoutToday", "EinputToday", "EloadToday", "EloadPercentageToday",
 			"EselfConsumptionAllTime", "EselfSufficiencyAllTime", "EGrid2LoadAllTime", "EGridChargeAllTime", "EHomeLoadAllTime", "EbatAllTime", "EchargeAllTime", "EeffAllTime", "Epv2loadAllTime", "EpvchargeAllTime", "EpvTAllTime", "EoutAllTime",
 			"popv", "poinv"
@@ -328,6 +328,11 @@ class AlphaEssCloud extends utils.Adapter {
 					this.setState("EselfSufficiency", parseFloat(json.data.eselfSufficiency), true);
 					this.setState("Epvtotal", parseFloat(json.data.epvtotal), true);
 					this.setState("Epvtoday", parseFloat(json.data.epvtoday), true);
+					this.setState("Echarge", parseFloat(json.data.echarge), true);
+					this.setState("Edischarge", parseFloat(json.data.edischarge), true);
+					this.setState("TotalIncome", parseFloat(json.data.totalIncome), true);
+					this.setState("TotalTreeNumber", parseFloat(json.data.treeNum), true);
+					this.setState("TotalCarbon", parseFloat(json.data.carbonNum), true);
 
 					this.setState("statistics_last_updated", new Date().getTime(), true);
 				} catch (error) {
@@ -402,51 +407,10 @@ class AlphaEssCloud extends utils.Adapter {
 		}
 	}
 
-	async getDeviceData() {
-		const url = `https://cloud.alphaess.com/api/web/home/getCustomMenuEssList?pageSize=10000&pageIndex=1`;
-
-		const config = {
-			validateStatus: () => true,
-			headers: this.GetHeaders({
-				"Authorization": this.authToken,
-			})
-		};
-
-		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
-
-		try {
-			const result = await axios.get(url, config);
-
-			if (result.status == 200)
-			{
-				const json = result.data;
-
-				const data = json.data[0];
-				this.setState("sys_sn", data.sysSn, true);
-				this.setState("systemId", data.systemId, true);
-				this.setState("popv", data.popv, true);
-				this.setState("poinv", data.poinv, true);
-				this.setState("mbat", data.mbat, true);
-				this.setState("minv", data.minv, true);
-				this.setState("ems_status", data.emsStatus, true);
-			}
-			else if (result.status == 401) {
-				this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
-				await this.Login();
-			}
-			else
-			{
-				this.log.error("Error Calling API: " + result.status + " - " + result.statusText);
-			}
-		} catch (error) {
-			this.log.error(error);
-		}
-	}
-
 	async getAllTimeStatisticsData() {
 		const todayDate = new Date().toLocaleDateString("en-CA");
 		const beginDate = new Date(2022, 4, 30).toLocaleDateString("en-CA"); //30.05.2022
-		const url = `https://cloud.alphaess.com/api/Power/SticsByPeriod?beginDay=${beginDate}&endDay=${todayDate}&tDay=${todayDate}&isOEM=0&SN=${this.config.system}&userID=&noLoading=true`;
+		const url = `https://cloud.alphaess.com/api/base/energy/getEnergyStatistics?beginDate=${beginDate}&endDate=${todayDate}&sysSn=${this.config.system}`;
 
 		const config = {
 			validateStatus: () => true,
@@ -482,6 +446,47 @@ class AlphaEssCloud extends utils.Adapter {
 				} catch (error) {
 					this.log.debug("Error while reading / parsing fetched data: " + json.data);
 				}
+			}
+			else if (result.status == 401) {
+				this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
+				await this.Login();
+			}
+			else
+			{
+				this.log.error("Error Calling API: " + result.status + " - " + result.statusText);
+			}
+		} catch (error) {
+			this.log.error(error);
+		}
+	}
+
+	async getDeviceData() {
+		const url = `https://cloud.alphaess.com/api/web/home/getCustomMenuEssList?pageSize=10000&pageIndex=1`;
+
+		const config = {
+			validateStatus: () => true,
+			headers: this.GetHeaders({
+				"Authorization": this.authToken,
+			})
+		};
+
+		this.log.debug("Calling API with authorization token: " + this.authToken + " url: " + url);
+
+		try {
+			const result = await axios.get(url, config);
+
+			if (result.status == 200)
+			{
+				const json = result.data;
+
+				const data = json.data[0];
+				this.setState("sys_sn", data.sysSn, true);
+				this.setState("systemId", data.systemId, true);
+				this.setState("popv", data.popv, true);
+				this.setState("poinv", data.poinv, true);
+				this.setState("mbat", data.mbat, true);
+				this.setState("minv", data.minv, true);
+				this.setState("ems_status", data.emsStatus, true);
 			}
 			else if (result.status == 401) {
 				this.log.debug("Unauthorized access, try loggin in: " + result.status + " - " + result.statusText);
