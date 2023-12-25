@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.38",
+        "version": "0.0.39",
         "news": {
+            "0.0.39": {
+                "en": "Re-Login on error",
+                "de": "Re-Login auf Fehler",
+                "ru": "Перейдите на ошибку",
+                "pt": "Re-Login no erro",
+                "nl": "Re-Login op fout",
+                "fr": "Re-Login on error",
+                "it": "Re-Login sull'errore",
+                "es": "Re-Login on error",
+                "pl": "Re-Login (ang.)",
+                "uk": "Релогін на помилки",
+                "zh-cn": "对错误的赔偿"
+            },
             "0.0.38": {
                 "en": "correcting and add properties of new API",
                 "de": "eigenschaften der neuen API korrigieren und hinzufügen",
@@ -238,19 +251,6 @@
                 "zh-cn": "Alpha ESSAPI变动:POST to GET"
             },
             "0.0.20": {
-                "en": "AuthSignature needed since 2022-10-16",
-                "de": "AuthSignature benötigt seit 2022-10-16",
-                "ru": "AuthSignature необходимо с 2022-10-16",
-                "pt": "AuthSignature necessário desde 2022-10-16",
-                "nl": "AuthSignatuur nodig sinds 2022-10-16",
-                "fr": "AuthSignature nécessaire depuis 2022-10-16",
-                "it": "AuthSignature necessaria dal 2022-10-16",
-                "es": "AuthSignature necesaria desde 2022-10-16",
-                "pl": "AuthSignature (ang.)",
-                "uk": "З 2022-10-16",
-                "zh-cn": "自2022-10-16年以来需要的尊严"
-            },
-            "0.0.19": {
                 "en": "AuthSignature needed since 2022-10-16",
                 "de": "AuthSignature benötigt seit 2022-10-16",
                 "ru": "AuthSignature необходимо с 2022-10-16",
