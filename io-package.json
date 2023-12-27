@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.40",
+        "version": "0.0.41",
         "news": {
+            "0.0.41": {
+                "en": "Re-Login on error",
+                "de": "Re-Login auf Fehler",
+                "ru": "Перейдите на ошибку",
+                "pt": "Re-Login no erro",
+                "nl": "Re-Login op fout",
+                "fr": "Re-Login on error",
+                "it": "Re-Login sull'errore",
+                "es": "Re-Login on error",
+                "pl": "Re-Login (ang.)",
+                "uk": "Релогін на помилки",
+                "zh-cn": "对错误的赔偿"
+            },
             "0.0.40": {
                 "en": "Re-Login on error",
                 "de": "Re-Login auf Fehler",
@@ -249,19 +262,6 @@
                 "pl": "Auth-Key",
                 "uk": "Оновлено Auth-Key",
                 "zh-cn": "最新Auth-Key"
-            },
-            "0.0.21": {
-                "en": "Alpha ESS API changes: POST to GET",
-                "de": "Alpha ESS API Änderungen: POST zu GET",
-                "ru": "Альфа ESS API меняется: POST к GET",
-                "pt": "Alpha ESS API muda: POST para GET",
-                "nl": "Alfa API verandert:",
-                "fr": "Alpha ESS API changes: POST to GET",
-                "it": "Modifiche dell'API Alpha ESS: POST a GET",
-                "es": "Cambios de API de Alpha ESS: POST a GET",
-                "pl": "Alpha ESS API changes: POST to GET",
-                "uk": "Зміна API Альфа ESS: POST до GET",
-                "zh-cn": "Alpha ESSAPI变动:POST to GET"
             }
         },
         "title": "Alpha ESS Cloud",
