@@ -288,6 +288,7 @@ class AlphaEssCloud extends utils.Adapter {
 					this.setState("last_updated", new Date().getTime(), true);
 				} catch (error) {
 					this.log.debug("Error while reading / parsing fetched data: " + json.data);
+					await this.Login();
 				}
 			}
 			else if (result.status == 401) {
@@ -337,6 +338,7 @@ class AlphaEssCloud extends utils.Adapter {
 					this.setState("statistics_last_updated", new Date().getTime(), true);
 				} catch (error) {
 					this.log.debug("Error while reading / parsing fetched data: " + json.data);
+					await this.Login();
 				}
 			}
 			else if (result.status == 401) {
@@ -392,6 +394,7 @@ class AlphaEssCloud extends utils.Adapter {
 					this.setState("statistics_last_updated", new Date().getTime(), true);
 				} catch (error) {
 					this.log.debug("Error while reading / parsing fetched data: " + json.data);
+					await this.Login();
 				}
 			}
 			else if (result.status == 401) {
@@ -445,6 +448,7 @@ class AlphaEssCloud extends utils.Adapter {
 					this.setState("statistics_alltime_last_updated", new Date().getTime(), true);
 				} catch (error) {
 					this.log.debug("Error while reading / parsing fetched data: " + json.data);
+					await this.Login();
 				}
 			}
 			else if (result.status == 401) {
