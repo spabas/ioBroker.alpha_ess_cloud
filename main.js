@@ -411,9 +411,10 @@ class AlphaEssCloud extends utils.Adapter {
 	}
 
 	async getAllTimeStatisticsData() {
-		const todayDate = new Date().toLocaleDateString("en-CA");
+		const nextYear = new Date().getFullYear() + 1;
+		const endDate = new Date(nextYear, 0, 1).toLocaleDateString("en-CA"); //Beginn des nächsten Jahres
 		const beginDate = new Date(2022, 4, 30).toLocaleDateString("en-CA"); //30.05.2022
-		const url = `https://cloud.alphaess.com/api/base/energy/getEnergyStatistics?beginDate=${beginDate}&endDate=${todayDate}&sysSn=${this.config.system}`;
+		const url = `https://cloud.alphaess.com/api/base/energy/getEnergyStatistics?beginDate=${beginDate}&endDate=${endDate}&sysSn=${this.config.system}`;
 
 		const config = {
 			validateStatus: () => true,

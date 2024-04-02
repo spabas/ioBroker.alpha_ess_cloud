@@ -21,6 +21,9 @@ Getting PV data from Alpha ESS Cloud
 	### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* Load historical data with end date greater than today to avoid getting incorrect values due to UTC time at the turn of the day
+
 ### 0.0.41 (2023-12-27)
 * Re-Login on error
 
