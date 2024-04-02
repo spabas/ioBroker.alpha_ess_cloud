@@ -1,6 +1,6 @@
 {
   "name": "iobroker.alpha_ess_cloud",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "description": "Getting PV data from Alpha ESS Cloud",
   "author": {
     "name": "spabas",

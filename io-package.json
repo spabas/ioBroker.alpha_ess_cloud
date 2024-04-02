@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "alpha_ess_cloud",
-        "version": "0.0.41",
+        "version": "0.0.42",
         "news": {
+            "0.0.42": {
+                "en": "Load historical data with end date greater than today to avoid getting incorrect values due to UTC time at the turn of the day",
+                "de": "Belasten Sie historische Daten mit einem Enddatum größer als heute, um zu vermeiden, falsche Werte aufgrund der UTC-Zeit am Tagwechsel",
+                "ru": "Загрузить исторические данные с датой окончания больше, чем сегодня, чтобы избежать получения неверных значений из-за времени UTC на рубеже дня",
+                "pt": "Carregar dados históricos com data final maior do que hoje para evitar obter valores incorretos devido ao tempo UTC na virada do dia",
+                "nl": "Laad historische gegevens met een einddatum groter dan vandaag om te voorkomen dat onjuiste waarden als gevolg van UTC-tijd bij het begin van de dag",
+                "fr": "Charger des données historiques avec une date de fin supérieure à aujourd'hui pour éviter d'obtenir des valeurs incorrectes en raison de l'heure UTC au tour de la journée",
+                "it": "Caricare i dati storici con la data finale maggiore di oggi per evitare di ottenere valori errati a causa dell'ora UTC alla volta del giorno",
+                "es": "Cargar datos históricos con fecha final mayor que hoy para evitar obtener valores incorrectos debido al tiempo UTC a la vuelta del día",
+                "pl": "Wczytaj dane historyczne z datą końcową większą niż dzisiaj, aby uniknąć uzyskania nieprawidłowych wartości z powodu czasu UTC na początku dnia",
+                "uk": "Навантаження історичних даних з датою закінчення більше, ніж сьогодні, щоб уникнути отримання некоректних значень через час UTC в свою чергу",
+                "zh-cn": "将历史数据装入结束日期大于今天的数据,以避免由于UTC时间推移而获取错误值"
+            },
             "0.0.41": {
                 "en": "Re-Login on error",
                 "de": "Re-Login auf Fehler",
@@ -249,19 +262,6 @@
                 "pl": "Zdjęcie Auth-Key z Alpha Cloud",
                 "uk": "Захоплення Auth-Key від Alpha Cloud портал",
                 "zh-cn": "Fetching Auth-Key from Alpha Cloud"
-            },
-            "0.0.22": {
-                "en": "Updated Auth-Key",
-                "de": "Aktualisierte Auth-Key",
-                "ru": "Обновлено Auth-Key",
-                "pt": "Auth-Key atualizado",
-                "nl": "Update Auth-Key",
-                "fr": "Actualisé Auth-Key",
-                "it": "Auth-Key aggiornato",
-                "es": "Actualizado Auth-Key",
-                "pl": "Auth-Key",
-                "uk": "Оновлено Auth-Key",
-                "zh-cn": "最新Auth-Key"
             }
         },
         "title": "Alpha ESS Cloud",
